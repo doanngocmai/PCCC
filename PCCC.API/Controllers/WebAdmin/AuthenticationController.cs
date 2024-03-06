@@ -13,7 +13,7 @@ using PCCC.Data.Entities;
 namespace PCCC.API.Controllers.WebAdmin
 {
     [Route("api/web/[controller]")]
-    [ApiExplorerSettings(GroupName = "Web")]
+    [ApiExplorerSettings(GroupName = "WebAmin")]
     [ApiController]
     [SwaggerTag("Authen")]
     public class AuthenticationController : ControllerBase
