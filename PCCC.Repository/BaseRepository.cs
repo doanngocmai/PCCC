@@ -7,9 +7,9 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using PCCC.Repository.Interfaces;
 using PCCC.Data;
-using PagedList;
+using PagedList.Core;
 
-namespace APIProject.Repository
+namespace PCCC.Repository
 {
     public class BaseRepository<T> : IRepository<T> where T : class
     {
@@ -53,7 +53,7 @@ namespace APIProject.Repository
 
                 if (orderBy != null) query = orderBy(query);
 
-                return query.ToPagedList(Page,Limit);
+                return query.ToPagedList(Page, Limit);
             }
             catch (Exception ex)
             {

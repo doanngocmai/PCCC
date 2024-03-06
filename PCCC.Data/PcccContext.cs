@@ -5,7 +5,7 @@ using PCCC.Data.Entities;
 
 namespace PCCC.Data;
 
-public partial class PcccContext : IdentityDbContext<IdentityUser>
+public partial class PcccContext : DbContext
 {
     public PcccContext()
     {

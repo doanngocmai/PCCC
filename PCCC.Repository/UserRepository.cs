@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PagedList;
 using PCCC.Common.DTOs.Users;
 using PCCC.Common.Utils;
 using PCCC.Data;
 using PCCC.Data.Entities;
+using PCCC.Repository;
 using PCCC.Repository.Interfaces;
 
 namespace APIProject.Repository
