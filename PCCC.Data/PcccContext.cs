@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using PCCC.Data.Entities;
 
@@ -15,6 +15,8 @@ public partial class PcccContext : DbContext
         : base(options)
     {
     }
+
+    public virtual DbSet<Advertisement> Advertisements { get; set; }
 
     public virtual DbSet<ApartmentUser> ApartmentUsers { get; set; }
 
@@ -32,7 +34,13 @@ public partial class PcccContext : DbContext
 
     public virtual DbSet<PointArea> PointAreas { get; set; }
 
+    public virtual DbSet<PremiumAccUser> PremiumAccUsers { get; set; }
+
     public virtual DbSet<Role> Roles { get; set; }
+
+    public virtual DbSet<StatusContact> StatusContacts { get; set; }
+
+    public virtual DbSet<UpgradeAccount> UpgradeAccounts { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
@@ -40,6 +48,15 @@ public partial class PcccContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Advertisement>(entity =>
+        {
+            entity.HasNoKey();
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.IsActive).HasColumnType("bit(1)");
+            entity.Property(e => e.Name).HasMaxLength(256);
+        });
+
         modelBuilder.Entity<ApartmentUser>(entity =>
         {
             entity.HasNoKey();
@@ -124,6 +141,15 @@ public partial class PcccContext : DbContext
             entity.Property(e => e.Id).HasColumnName("ID");
         });
 
+        modelBuilder.Entity<PremiumAccUser>(entity =>
+        {
+            entity.HasNoKey();
+
+            entity.Property(e => e.AdsId).HasColumnName("AdsID");
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+        });
+
         modelBuilder.Entity<Role>(entity =>
         {
             entity.HasNoKey();
@@ -134,6 +160,30 @@ public partial class PcccContext : DbContext
             entity.Property(e => e.RoleName).HasMaxLength(256);
         });
 
+        modelBuilder.Entity<StatusContact>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("StatusContact");
+
+            entity.Property(e => e.Gmail).HasMaxLength(128);
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name).HasColumnType("character varying");
+            entity.Property(e => e.Phone).HasColumnType("character varying");
+            entity.Property(e => e.ReferralCode).HasMaxLength(10);
+            entity.Property(e => e.Title).HasMaxLength(256);
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+        });
+
+        modelBuilder.Entity<UpgradeAccount>(entity =>
+        {
+            entity.HasNoKey();
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.IsActive).HasColumnType("bit(1)");
+            entity.Property(e => e.Name).HasMaxLength(256);
+        });
+
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasNoKey();
@@ -142,13 +192,13 @@ public partial class PcccContext : DbContext
             entity.Property(e => e.ApartmentUserId).HasColumnName("ApartmentUserID");
             entity.Property(e => e.BuildingId).HasColumnName("BuildingID");
             entity.Property(e => e.CreatorUserName).HasColumnType("character varying");
+            entity.Property(e => e.Email).HasMaxLength(256);
             entity.Property(e => e.FullName).HasColumnType("character varying");
-            entity.Property(e => e.Gmail).HasColumnType("character varying(256)[]");
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Password).HasColumnType("character varying");
-            entity.Property(e => e.Phone).HasColumnType("character varying(15)[]");
+            entity.Property(e => e.Phone).HasMaxLength(15);
             entity.Property(e => e.UpgradeAccId).HasColumnName("UpgradeAccID");
-            entity.Property(e => e.UserName).HasColumnType("character varying(256)[]");
+            entity.Property(e => e.UserName).HasMaxLength(256);
         });
 
         modelBuilder.Entity<UserRole>(entity =>

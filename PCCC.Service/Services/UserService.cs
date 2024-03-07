@@ -72,13 +72,13 @@ namespace APIProject.Service.Services
         //        if (!String.IsNullOrEmpty(model.Email))
         //        {
         //            var _email = await _userRepository.GetFirstOrDefaultAsync(e => e.Email == model.Email);
-        //            if (_email != null) return JsonResponse.Error(SystemParam.ERROR_REGISTER_EMAIL_EXIST, SystemParam.MESSAGE_REGISTER_EMAIL_EXIST);
+        //            if (_email != null) return JsonResponse.Error(PCCCConsts.ERROR_REGISTER_EMAIL_EXIST, PCCCConsts.MESSAGE_REGISTER_EMAIL_EXIST);
         //        }
         //        // GenPassword 
         //        string password = Util.GenPass(model.Password);
         //        PCCC.Data.Entities.User user = new PCCC.Data.Entities.User()
         //        {
-        //            CreatedDate = DateTime.Now,
+        //            CreationTime = DateTime.Now,
         //            Email = model.Email,
         //            Phone = model.Phone,
         //            Role = model.Role,

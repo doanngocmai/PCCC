@@ -7,13 +7,7 @@ public partial class User
 {
     public long Id { get; set; }
 
-    public string[] UserName { get; set; } = null!;
-
     public string? FullName { get; set; }
-
-    public string[] Phone { get; set; } = null!;
-
-    public string[]? Gmail { get; set; }
 
     public bool Sex { get; set; }
 
@@ -38,4 +32,10 @@ public partial class User
     public long? BuildingId { get; set; }
 
     public long? ApartmentUserId { get; set; }
+
+    public string UserName { get; set; } = null!;
+
+    public string Phone { get; set; } = null!;
+
+    public string Email { get; set; } = null!;
 }
