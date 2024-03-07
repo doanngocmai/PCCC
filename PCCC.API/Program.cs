@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PCCC.Data;
 using PCCC.Repository.Interfaces;
 using PCCC.Repository;
@@ -10,6 +10,7 @@ using APIProject.Repository;
 using AutoMapper;
 using PCCC.Service;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,31 +26,64 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+//builder.Services.AddApiVersioning(options =>
+//{
+//    options.DefaultApiVersion = new ApiVersion(1, 0);
+//    options.AssumeDefaultVersionWhenUnspecified = true;
+//    options.ReportApiVersions = true;
+//});
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "App API", Version = "v1" });
-
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    c.SwaggerDoc("WebClient", new OpenApiInfo { Title = "WebClient API", Version = "WebClient" });
+    c.SwaggerDoc("WebAdmin", new OpenApiInfo { Title = "Web Admin API", Version = "WebAdmin" });
+    c.DocInclusionPredicate((docName, apiDesc) =>
     {
-        Description = "JWT Authorization header using the Bearer scheme",
-        Type = SecuritySchemeType.Http,
-        Scheme = "bearer"
-    });
-
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
+        if (string.IsNullOrEmpty(apiDesc.GroupName))
         {
-            new OpenApiSecurityScheme
+            if (docName == "WebClient")
             {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            new string[] {}
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
+        else
+        {
+            if (docName == apiDesc.GroupName)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     });
+
+    //c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    //{
+    //    Description = "JWT Authorization header using the Bearer scheme",
+    //    Type = SecuritySchemeType.Http,
+    //    Scheme = "bearer"
+    //});
+
+    //c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    //{
+    //    {
+    //        new OpenApiSecurityScheme
+    //        {
+    //            Reference = new OpenApiReference
+    //            {
+    //                Type = ReferenceType.SecurityScheme,
+    //                Id = "Bearer"
+    //            }
+    //        },
+    //        new string[] {}
+    //    }
+    //});
 });
 
 builder.Services.AddDbContext<PcccContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("main")));
@@ -64,12 +98,16 @@ builder.Services.AddDistributedMemoryCache();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
-
+app.UseDeveloperExceptionPage();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/WebClient/swagger.json", "WebClient API");
+        options.SwaggerEndpoint("/swagger/WebAdmin/swagger.json", "WebAdmin API");
+    });
 }
 
 app.UseHttpsRedirection();

@@ -11,5 +11,5 @@ public partial class UserRole
 
     public long RoleId { get; set; }
 
-    public DateOnly CreationTime { get; set; }
+    public DateTime CreationTime { get; set; }
 }

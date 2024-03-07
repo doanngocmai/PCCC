@@ -13,6 +13,7 @@ using PCCC.Data.Entities;
 namespace PCCC.API.Controllers.WebAdmin
 {
     [Route("api/web/[controller]")]
+    [ApiExplorerSettings(GroupName = "WebAdmin")]
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
@@ -51,11 +52,11 @@ namespace PCCC.API.Controllers.WebAdmin
         ///     }
         ///
         /// </remarks>
-        //[HttpPost("Login")]
-        //public async Task<JsonResultModel> Login(LoginModel model)
-        //{
-        //    return await _userService.Authenticate(model, secretKey, timeout);
-        //}
+        [HttpPost("Login")]
+        public async Task<JsonResultModel> Login(LoginModel model)
+        {
+            return await _userService.Authenticate(model, secretKey, timeout);
+        }
         ///// <summary>
         ///// Đổi mật khẩu
         ///// </summary>
@@ -78,8 +79,5 @@ namespace PCCC.API.Controllers.WebAdmin
         //    var user = (User)HttpContext.Items["Payload"];
         //    return await _userService.GetUserInfo(user.ID);
         //}
-
-	[HttpGet("login")]
-	public string Hello() => "Hello";
     }
 }

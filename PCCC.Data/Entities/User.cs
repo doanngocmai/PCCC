@@ -19,7 +19,7 @@ public partial class User
 
     public int Level { get; set; }
 
-    public DateOnly CreationTime { get; set; }
+    public DateTime CreationTime { get; set; }
 
     public bool IsDelete { get; set; }
 

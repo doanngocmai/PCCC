@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PCCC.Data;
+using PCCC.Data.Entities;
 
 namespace PCCC.API.Controllers
 {

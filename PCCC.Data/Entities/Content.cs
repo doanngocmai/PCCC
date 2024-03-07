@@ -24,5 +24,5 @@ public partial class Content
 
     public BitArray IsActive { get; set; } = null!;
 
-    public DateOnly CreationTime { get; set; }
+    public DateTime CreationTime { get; set; }
 }

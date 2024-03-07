@@ -15,7 +15,7 @@ public partial class ApartmentUser
 
     public float? Latitude { get; set; }
 
-    public DateOnly CreationTime { get; set; }
+    public DateTime CreationTime { get; set; }
 
     public int AreaId { get; set; }
 

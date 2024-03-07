@@ -16,11 +16,11 @@ public partial class Advertisement
 
     public float Price { get; set; }
 
-    public DateOnly StartTime { get; set; }
+    public DateTime StartTime { get; set; }
 
-    public DateOnly EndTime { get; set; }
+    public DateTime EndTime { get; set; }
 
     public BitArray IsActive { get; set; } = null!;
 
-    public DateOnly CreationTime { get; set; }
+    public DateTime CreationTime { get; set; }
 }

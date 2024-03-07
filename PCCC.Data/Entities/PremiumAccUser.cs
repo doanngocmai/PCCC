@@ -11,5 +11,5 @@ public partial class PremiumAccUser
 
     public int AdsId { get; set; }
 
-    public DateOnly CreationTime { get; set; }
+    public DateTime CreationTime { get; set; }
 }

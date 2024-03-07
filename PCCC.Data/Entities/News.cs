@@ -14,7 +14,7 @@ public partial class News
 
     public string Content { get; set; } = null!;
 
-    public DateOnly CreationTime { get; set; }
+    public DateTime CreationTime { get; set; }
 
     public string? Image { get; set; }
 

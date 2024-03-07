@@ -14,7 +14,7 @@ public partial class Role
 
     public string? Note { get; set; }
 
-    public DateOnly CreationTime { get; set; }
+    public DateTime CreationTime { get; set; }
 
     public BitArray IsActive { get; set; } = null!;
 }

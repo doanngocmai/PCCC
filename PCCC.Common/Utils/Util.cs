@@ -253,22 +253,22 @@ namespace PCCC.Common.Utils
                 return null;
         }
 
-        //public static string GenPass(string pass)
-        //{
-        //    return BCrypt.Net.BCrypt.HashPassword(pass, 10);
-        //}
+        public static string GenPass(string pass)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(pass, 10);
+        }
 
-        //public static bool CheckPass(string pass, string userPass)
-        //{
-        //    try
-        //    {
-        //        return BCrypt.Net.BCrypt.Verify(pass, userPass);
-        //    }
-        //    catch
-        //    {
-        //        return false;
-        //    }
-        //}
+        public static bool CheckPass(string pass, string userPass)
+        {
+            try
+            {
+                return BCrypt.Net.BCrypt.Verify(pass, userPass);
+            }
+            catch
+            {
+                return false;
+            }
+        }
         public static DateTime EndOfDay(DateTime date)
         {
             return new DateTime(date.Year, date.Month, date.Day, 23, 59, 59, 999);

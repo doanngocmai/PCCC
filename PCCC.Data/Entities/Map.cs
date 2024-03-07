@@ -23,7 +23,7 @@ public partial class Map
 
     public string? Note { get; set; }
 
-    public DateOnly CreationTime { get; set; }
+    public DateTime CreationTime { get; set; }
 
     public int FloorNumber { get; set; }
 
