@@ -27,8 +27,7 @@ builder.Services.AddSession(options =>
 });
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("App", new OpenApiInfo { Title = "App API", Version = "App" });
-    c.SwaggerDoc("Web", new OpenApiInfo { Title = "Web API", Version = "Web" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "App API", Version = "v1" });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {

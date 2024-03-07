@@ -13,15 +13,14 @@ using PCCC.Data.Entities;
 namespace PCCC.API.Controllers.WebAdmin
 {
     [Route("api/web/[controller]")]
-    [ApiExplorerSettings(GroupName = "WebAmin")]
     [ApiController]
-    [SwaggerTag("Authen")]
     public class AuthenticationController : ControllerBase
     {
         public IConfiguration _Configuration;
         private readonly IUserService _userService;
         private readonly string secretKey;
         private readonly int timeout;
+
         public AuthenticationController(IUserService userService, IConfiguration configuration)
         {
             _userService = userService;
@@ -79,5 +78,8 @@ namespace PCCC.API.Controllers.WebAdmin
         //    var user = (User)HttpContext.Items["Payload"];
         //    return await _userService.GetUserInfo(user.ID);
         //}
+
+	[HttpGet("login")]
+	public string Hello() => "Hello";
     }
 }
