@@ -14,11 +14,11 @@ namespace PCCC.API.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-        private readonly PcccContext _context;
+        //private readonly PcccContext _context;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, PcccContext context)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger/*, PcccContext context*/)
         {
-            _context = context;
+            //_context = context;
             _logger = logger;
         }
 
@@ -34,11 +34,11 @@ namespace PCCC.API.Controllers
             .ToArray();
         }
 
-        [HttpGet("TestConnectToDB")]
-        public async Task<bool> GetTest()
-        {
-            var t = await _context.ApartmentUsers.AnyAsync();
-            return t;
-        }
+        //[HttpGet("TestConnectToDB")]
+        //public async Task<bool> GetTest()
+        //{
+        //    var t = await _context.ApartmentUsers.AnyAsync();
+        //    return t;
+        //}
     }
 }

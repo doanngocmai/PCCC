@@ -16,4 +16,6 @@ public partial class Building
     public int ApartmentUserId { get; set; }
 
     public DateTime CreationTime { get; set; }
+
+    public int Id { get; set; }
 }

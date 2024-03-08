@@ -218,6 +218,9 @@ namespace PCCC.Common.Utils
         public const int ERROR_ROLE_USER_STILL_EXIST = 3;
         public const string MESSAGE_ROLE_USER_STILL_EXIST = "Không thể xóa phân quyền khi vẫn tồn tại tài khoản thuộc phân quyền";
 
+
+        //LevelAdmin
+        public const int UserWebAmin = 1;
         #endregion
     }
 }

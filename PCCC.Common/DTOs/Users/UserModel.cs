@@ -6,7 +6,7 @@ namespace PCCC.Common.DTOs.Users
 {
     public class UserModel
     {
-        public int ID { get; set; }
+        public long ID { get; set; }
         public string Username { get; set; }
         public string Phone { get; set; }
         public string RoleName { get; set; }
