@@ -26,12 +26,7 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-//builder.Services.AddApiVersioning(options =>
-//{
-//    options.DefaultApiVersion = new ApiVersion(1, 0);
-//    options.AssumeDefaultVersionWhenUnspecified = true;
-//    options.ReportApiVersions = true;
-//});
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("WebClient", new OpenApiInfo { Title = "WebClient API", Version = "WebClient" });
@@ -98,6 +93,10 @@ builder.Services.AddDistributedMemoryCache();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
+app.UseCors(builder =>
+{
+    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+});
 app.UseDeveloperExceptionPage();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
