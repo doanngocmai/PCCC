@@ -14,17 +14,15 @@ namespace PCCC.Common.DTOs.Users
 
         public string Password { get; set; } = null!;
 
-        public DateTime CreationTime { get; set; }
-
         public float Amount { get; set; }
 
-        public string CreatorUserName { get; set; } = null!;
+        public int IsActive { get; set; }
 
-        public long? UpgradeAccId { get; set; }
+        //public long? UpgradeAccId { get; set; }
 
-        public long? BuildingId { get; set; }
+        //public long? BuildingId { get; set; }
 
-        public long? ApartmentUserId { get; set; }
+        //public long? ApartmentUserId { get; set; }
 
         public string UserName { get; set; } = null!;
 

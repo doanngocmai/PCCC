@@ -77,20 +77,20 @@ namespace APIProject.Service.Services
                 }
                 // GenPassword 
                 string password = Util.GenPass(model.Password);
-                PCCC.Data.Entities.User user = new PCCC.Data.Entities.User()
+                PCCC.Data.Entities.User user = new PCCC.Data.Entities.User()                    
                 {
                     CreationTime = DateTime.Now,
                     Email = model.Email,
                     Phone = model.Phone,
                     Password = password,
                     UserName = model.UserName,
-                    IsActive = PCCCConsts.ACTIVE,
+                    IsActive = model.IsActive,
                     Level = PCCCConsts.UserWebAmin,
-                    IsDelete = false,
+                        IsDelete = false,
                     Address = model.Address,
                     Amount = model.Amount,
                     FullName = model.FullName,
-                    CreatorUserName = model.CreatorUserName.Length > 0 ? model.CreatorUserName : "Admin",
+                    CreatorUserName = PCCCConsts.ADMIN,
                     Sex = model.Sex,
                 };
                 await _userRepository.AddAsync(user);
