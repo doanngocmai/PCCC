@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace PCCC.Data.Entities;
@@ -20,7 +19,7 @@ public partial class UpgradeAccount
 
     public DateTime EndTime { get; set; }
 
-    public BitArray IsActive { get; set; } = null!;
-
     public DateTime CreationTime { get; set; }
+
+    public bool IsActive { get; set; }
 }

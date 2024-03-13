@@ -5,12 +5,10 @@ using PCCC.Repository;
 using PCCC.Service.Interfaces;
 using PCCC.Service.Services;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using APIProject.Service.Services;
-using APIProject.Repository;
-using AutoMapper;
 using PCCC.Service;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using PCCCC.Service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,28 +55,6 @@ builder.Services.AddSwaggerGen(c =>
         }
 
     });
-
-    //c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    //{
-    //    Description = "JWT Authorization header using the Bearer scheme",
-    //    Type = SecuritySchemeType.Http,
-    //    Scheme = "bearer"
-    //});
-
-    //c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    //{
-    //    {
-    //        new OpenApiSecurityScheme
-    //        {
-    //            Reference = new OpenApiReference
-    //            {
-    //                Type = ReferenceType.SecurityScheme,
-    //                Id = "Bearer"
-    //            }
-    //        },
-    //        new string[] {}
-    //    }
-    //});
 });
 
 builder.Services.AddDbContext<PcccContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("main")));
@@ -87,6 +63,8 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped(typeof(IServices<>), typeof(BaseService<>));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 
 builder.Services.AddDistributedMemoryCache();
 // Add Mapper Singleton

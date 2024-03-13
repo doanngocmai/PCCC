@@ -7,7 +7,7 @@ using PCCC.Data.Entities;
 using PCCC.Repository;
 using PCCC.Repository.Interfaces;
 
-namespace APIProject.Repository
+namespace PCCC.Repository
 {
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
@@ -25,17 +25,21 @@ namespace APIProject.Repository
                     var fd = Util.ConvertFromDate(fromDate);
                     var td = Util.ConvertToDate(toDate);
                     var model = (from u in DbContext.Users
-                                 where u.IsActive.Equals(PCCCConsts.ACTIVE)
-                                 && (!string.IsNullOrEmpty(SearchKey) ? (u.UserName.Contains(SearchKey) || u.Phone.Contains(SearchKey)) : true)
+                                 where (!string.IsNullOrEmpty(SearchKey) ? (u.UserName.Contains(SearchKey) || u.Phone.Contains(SearchKey)) : true)
                                  && (status.HasValue ? u.IsActive.Equals(status) : true)
                                  select new UserModel
                                  {
                                      ID = u.Id,
                                      Email = u.Email,
                                      Phone = u.Phone,
-                                     Username = u.UserName,
-                                     Status = u.IsActive,
-                                     CreatedDate = u.CreationTime,
+                                     UserName = u.UserName,
+                                     IsActive = u.IsActive,
+                                     FullName = u.FullName,
+                                     Address = u.Address,
+                                     Amount = u.Amount,
+                                     CreatorUserName = u.CreatorUserName,
+                                     CreationTime = u.CreationTime,
+
                                  }).AsQueryable().ToPagedList(page, limit);
                     return model;   
                 });

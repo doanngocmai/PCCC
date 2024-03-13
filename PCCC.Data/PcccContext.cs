@@ -106,7 +106,6 @@ public partial class PcccContext : DbContext
             entity.Property(e => e.Content1).HasColumnName("Content");
             entity.Property(e => e.Icon).HasColumnType("character varying");
             entity.Property(e => e.Image).HasColumnType("character varying");
-            entity.Property(e => e.IsActive).HasColumnType("bit(1)");
             entity.Property(e => e.Link).HasColumnType("character varying");
             entity.Property(e => e.Name).HasMaxLength(256);
         });
@@ -133,7 +132,6 @@ public partial class PcccContext : DbContext
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("ID");
             entity.Property(e => e.Image).HasColumnType("character varying");
-            entity.Property(e => e.IsActive).HasColumnType("bit(1)");
             entity.Property(e => e.Title).HasColumnType("character varying");
         });
 
@@ -177,7 +175,6 @@ public partial class PcccContext : DbContext
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("ID");
             entity.Property(e => e.DisplayName).HasMaxLength(256);
-            entity.Property(e => e.IsActive).HasColumnType("bit(1)");
             entity.Property(e => e.RoleName).HasMaxLength(256);
         });
 
@@ -205,7 +202,6 @@ public partial class PcccContext : DbContext
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("ID");
-            entity.Property(e => e.IsActive).HasColumnType("bit(1)");
             entity.Property(e => e.Name).HasMaxLength(256);
         });
 

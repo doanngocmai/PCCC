@@ -1,7 +1,6 @@
 ﻿using PagedList.Core;
 using PCCC.Common.DTOs.Users;
 using PCCC.Data.Entities;
-using PCCC.Repository.Interfaces;
 
 namespace PCCC.Repository.Interfaces
 {

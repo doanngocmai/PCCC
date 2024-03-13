@@ -9,10 +9,11 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using PCCC.Common.DTOs.Authentications;
 using PCCC.Common.DTOs;
+using PCCC.Data.Entities;
 
-namespace APIProject.Service.Services
+namespace PCCC.Service.Services
 {
-    public class UserService : BaseService<PCCC.Data.Entities.User>, IUserService
+    public class UserService : BaseService<User>, IUserService
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
@@ -22,7 +23,7 @@ namespace APIProject.Service.Services
             _mapper = mapper;
         }
         // Gender token :
-        private string GenerateJwtToken(PCCC.Data.Entities.User user, string secretKey, int timeout)
+        private string GenerateJwtToken(User user, string secretKey, int timeout)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(secretKey);
@@ -77,7 +78,7 @@ namespace APIProject.Service.Services
                 }
                 // GenPassword 
                 string password = Util.GenPass(model.Password);
-                PCCC.Data.Entities.User user = new PCCC.Data.Entities.User()                    
+                User user = new User()                    
                 {
                     CreationTime = DateTime.Now,
                     Email = model.Email,

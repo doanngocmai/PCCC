@@ -30,4 +30,6 @@ public partial class Map
     public int AreaId { get; set; }
 
     public int BuiildingId { get; set; }
+
+    public bool IsActive { get; set; }
 }
