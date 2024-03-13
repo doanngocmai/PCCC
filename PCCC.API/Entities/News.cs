@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace PCCC.API.Entities;
@@ -18,5 +17,5 @@ public partial class News
 
     public string? Image { get; set; }
 
-    public BitArray IsActive { get; set; } = null!;
+    public bool IsActive { get; set; }
 }
