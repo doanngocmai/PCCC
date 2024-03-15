@@ -70,8 +70,8 @@ namespace PCCC.API.Controllers.WebAdmin
         {
             return await _userService.CreateUser(model);
         }
-        /// <summary>
         /// Cập nhật user
+        /// <summary>
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>

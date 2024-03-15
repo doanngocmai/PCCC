@@ -20,7 +20,7 @@ namespace PCCC.API.Controllers.WebAdmin
             _roleService = roleService;
         }
         /// <summary>
-        /// Danh sách user
+        /// Danh sách role
         /// </summary>
         /// <param name="page"></param>
         /// <param name="limit"></param>
@@ -35,7 +35,7 @@ namespace PCCC.API.Controllers.WebAdmin
             return await _roleService.GetListRole(page, limit, SearchKey, status, fromDate, toDate);
         }
         /// <summary>
-        /// Thêm tài khoản cho admin
+        /// Thêm role
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -44,6 +44,17 @@ namespace PCCC.API.Controllers.WebAdmin
         public async Task<JsonResultModel> CreateRole(CreateRoleModel model)
         {
             return await _roleService.CreateRole(model);
+        }
+        /// Cập nhật user
+        /// <summary>
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [HttpPut("UpdateRole")]
+        //[Authorize]
+        public async Task<JsonResultModel> UpdateRole(UpdateRoleModel input)
+        {
+            return await _roleService.UpdateRole(input);
         }
     }
 }
