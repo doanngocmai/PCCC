@@ -50,7 +50,7 @@ namespace PCCC.API.Controllers.WebAdmin
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        [HttpPut("UpdateRole")]
+        [HttpPost("UpdateRole")]
         //[Authorize]
         public async Task<JsonResultModel> UpdateRole(UpdateRoleModel input)
         {
