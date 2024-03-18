@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PCCC.Common.DTOs.Contents;
 using PCCC.Common.DTOs.Roles;
 using PCCC.Common.DTOs.Users;
 using PCCC.Common.Utils;
@@ -55,6 +56,17 @@ namespace PCCC.API.Controllers.WebAdmin
         public async Task<JsonResultModel> UpdateRole(UpdateRoleModel input)
         {
             return await _roleService.UpdateRole(input);
+        }
+        /// <summary>
+        /// Xoá user
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        [HttpPost("DeleteRole/{ID}")]
+        //[Authorize]
+        public async Task<JsonResultModel> DeleteRole(int ID)
+        {
+            return await _roleService.DeleteRole(ID);
         }
     }
 }

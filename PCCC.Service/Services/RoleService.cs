@@ -40,48 +40,22 @@ namespace PCCCC.Service.Services
                 return JsonResponse.ServerError();
             }
         }
-        //public async Task<JsonResultModel> DeleteRole(int ID)
-        //{
-        //    try
-        //    {
-        //        var user = await _roleRepository.GetFirstOrDefaultAsync(x => x.Id == ID && x.IsActive == PCCCConsts.ACTIVE);
-        //        if (user == null) return JsonResponse.Error(PCCCConsts.ERROR_USER_NOT_FOUND, PCCCConsts.MESSAGE_USER_NOT_FOUND);
-        //        user.IsActive = PCCCConsts.ACTIVE_FALSE;
-        //        await _roleRepository.UpdateAsync(user);
-        //        return JsonResponse.Success();
-        //    }
-        //    catch (Exception Ex)
-        //    {
-        //        return JsonResponse.ServerError();
+        public async Task<JsonResultModel> DeleteRole(int ID)
+        {
+            try
+            {
+                var role = await _roleRepository.GetFirstOrDefaultAsync(x => x.Id == ID && !x.IsActive);
+                if (role == null) return JsonResponse.Error(PCCCConsts.ERROR_ROLE_NOT_FOUND, PCCCConsts.MESSAGE_ROLE_NOT_FOUND);
+                role.IsActive = true;
+                await _roleRepository.UpdateAsync(role);
+                return JsonResponse.Success();
+            }
+            catch (Exception Ex)
+            {
+                return JsonResponse.ServerError();
 
-        //    }
-        //}
-        //public async Task<JsonResultModel> GetRoleDetail(int ID)
-        //{
-        //    try
-        //    {
-        //        // Kiểm tra User có tồn tại hay khôngs
-        //        var user = await _roleRepository.GetFirstOrDefaultAsync(x => x.Id.Equals(ID) && x.IsActive.Equals(PCCCConsts.ACTIVE));
-        //        if (user == null) return JsonResponse.Error(PCCCConsts.ERROR_USER_NOT_FOUND, PCCCConsts.MESSAGE_USER_NOT_FOUND);
-
-        //        // Nếu Trường hợp có tồn tại
-        //        UserDetailModel _user = new UserDetailModel()
-        //        {
-        //            ID = user.Id,
-        //            Name = user.UserName,
-        //            Phone = user.Phone,
-        //            Email = user.Email,
-        //            Address = user.Address,
-        //            Status = user.IsActive,
-        //        };
-        //        // Trả ra người dùng :
-        //        return JsonResponse.Success(user);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return JsonResponse.ServerError();
-        //    }
-        //}
+            }
+        }
 
         public async Task<JsonResultModel> GetListRole(int page, int limit, string SearchKey, int? status, string fromDate, string toDate)
         {

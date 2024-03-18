@@ -103,7 +103,6 @@ public partial class PcccContext : DbContext
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("ID");
             entity.Property(e => e.Color).HasColumnType("character varying");
-            entity.Property(e => e.Content1).HasColumnName("Content");
             entity.Property(e => e.Icon).HasColumnType("character varying");
             entity.Property(e => e.Image).HasColumnType("character varying");
             entity.Property(e => e.Link).HasColumnType("character varying");

@@ -219,6 +219,17 @@ namespace PCCC.Common.Utils
         public const string MESSAGE_ROLE_USER_STILL_EXIST = "Không thể xóa phân quyền khi vẫn tồn tại tài khoản thuộc phân quyền";
 
 
+
+        //Content
+        public const int ERROR_CONTENT_ALREADY_EXIST = 1;
+        public const string MESSAGE_CONTENt_ALREADY_EXIST = "Nội dung này đã tồn tại";
+        public const int TYPE_CONTENT_BANNER = 1;
+        public const string MESSAGE_CONTENT_BANNER = "Banner";
+        public const int TYPE_CONTENT_FOOTER = 2;
+        public const string MESSAGE_CONTENT_FOOTER = "Footer";
+        public const int TYPE_CONTENT_CONTACT= 3;
+        public const string MESSAGE_CONTENT_CONTACT = "Contact";
+
         //LevelAdmin
         public const int UserWebAmin = 1;
 
