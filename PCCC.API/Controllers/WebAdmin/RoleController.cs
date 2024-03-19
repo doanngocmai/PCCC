@@ -20,27 +20,12 @@ namespace PCCC.API.Controllers.WebAdmin
         {
             _roleService = roleService;
         }
-        /// <summary>
-        /// Danh sách role
-        /// </summary>
-        /// <param name="page"></param>
-        /// <param name="limit"></param>
-        /// <param name="SearchKey"></param>
-        /// <param name="fromDate"></param>
-        /// <param name="toDate"></param>
-        /// <returns></returns>
         [HttpGet("GetListRole")]
         //[Authorize]
-        public async Task<JsonResultModel> GetListRole(int page = PCCCConsts.PAGE_DEFAULT, int limit = PCCCConsts.LIMIT_DEFAULT, string SearchKey = null, int? status = null, string fromDate = null, string toDate = null)
+        public async Task<JsonResultModel> GetListRole([FromQuery] RoleSearchPageResults param)
         {
-            return await _roleService.GetListRole(page, limit, SearchKey, status, fromDate, toDate);
+            return await _roleService.GetListRole(param);
         }
-        /// <summary>
-        /// Thêm role
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        //[Authorize]
         [HttpPost("CreateRole")]
         public async Task<JsonResultModel> CreateRole(CreateRoleModel model)
         {

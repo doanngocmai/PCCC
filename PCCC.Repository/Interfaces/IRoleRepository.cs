@@ -6,6 +6,6 @@ namespace PCCC.Repository.Interfaces
 {
     public interface IRoleRepository : IRepository<Role>
     {
-       Task<IPagedList<RoleModel>> GetRoles(int page, int limit, string SearchKey, int? status, string fromDate, string toDate);
+        Task<IPagedList<RoleModel>> GetRoles(RoleSearchPageResults param);
     }
 }

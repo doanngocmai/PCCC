@@ -17,17 +17,17 @@ namespace PCCC.Repository
 
         }
 
-        public async Task<IPagedList<RoleModel>> GetRoles(int page, int limit, string SearchKey, int? status, string fromDate, string toDate)
+        public async Task<IPagedList<RoleModel>> GetRoles(RoleSearchPageResults param)
         {
             try
             {
                 return await Task.Run(() =>
                 {
-                    var fd = Util.ConvertFromDate(fromDate);
-                    var td = Util.ConvertToDate(toDate);
+                    var fd = Util.ConvertFromDate(param.fromDate);
+                    var td = Util.ConvertToDate(param.toDate);
                     var model = (from u in DbContext.Roles
-                                 where (!string.IsNullOrEmpty(SearchKey) ? (u.RoleName.Contains(SearchKey) || u.DisplayName.Contains(SearchKey)) : true
-                                 && status.HasValue ? u.IsActive.Equals(status) : true)
+                                 where (!string.IsNullOrEmpty(param.SearchKey) ? (u.RoleName.Contains(param.SearchKey) || u.DisplayName.Contains(param.SearchKey)) : true
+                                 && param.IsActive.HasValue ? u.IsActive.Equals(param.IsActive) : true)
                                  select new RoleModel
                                  {
                                      Id = u.Id,
@@ -37,7 +37,7 @@ namespace PCCC.Repository
                                      IsActive = u.IsActive,
                                      CreationTime = u.CreationTime,
 
-                                 }).AsQueryable().ToPagedList(page, limit);
+                                 }).AsQueryable().ToPagedList(param.page, param.perPage);
                     return model;
                 });
             }

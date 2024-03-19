@@ -17,6 +17,25 @@ namespace PCCCC.Service.Services
             _roleRepository = roleRepository;
             _mapper = mapper;
         }
+        public async Task<JsonResultModel> GetListRole(RoleSearchPageResults param)
+        {
+            try
+            {
+                var list = await _roleRepository.GetRoles(param);
+                DataPagedListModel dataPagedListModel = new DataPagedListModel()
+                {
+                    Data = list,
+                    Limit = param.perPage,
+                    Page = param.page,
+                    TotalItemCount = list.TotalItemCount
+                };
+                return JsonResponse.Success(dataPagedListModel);
+            }
+            catch (Exception ex)
+            {
+                return JsonResponse.ServerError();
+            }
+        }
         public async Task<JsonResultModel> CreateRole(CreateRoleModel model)
         {   
             try
@@ -24,15 +43,24 @@ namespace PCCCC.Service.Services
                 var roleName = await _roleRepository.GetFirstOrDefaultAsync(x => x.RoleName == model.RoleName);
                 if (roleName != null)
                     return JsonResponse.Error(PCCCConsts.ERROR_ROLE_NAME_ALREADY_EXIST, PCCCConsts.MESSAGE_ROLE_NAME_ALREADY_EXIST);
-                Role role = new Role()
-                {
-                    RoleName = model.RoleName,
-                    DisplayName = model.DisplayName,
-                    Note = model.Note,
-                    CreationTime = DateTime.Now,
-                    IsActive = model.IsActive
-                };
+                var role = _mapper.Map<Role>(model);
+                role.CreationTime = DateTime.Now;
                 await _roleRepository.AddAsync(role);
+                return JsonResponse.Success();
+            }
+            catch (Exception ex)
+            {
+                return JsonResponse.ServerError();
+            }
+        }
+        public async Task<JsonResultModel> UpdateRole(UpdateRoleModel model)
+        {
+            try
+            {
+                var record = await _roleRepository.GetFirstOrDefaultAsync(x => x.Id.Equals(model.Id));
+                if (record == null) return JsonResponse.Error(PCCCConsts.ERROR_ROLE_NOT_FOUND, PCCCConsts.MESSAGE_ROLE_NOT_FOUND);
+                _mapper.Map(model, record);
+                await _roleRepository.UpdateAsync(record);
                 return JsonResponse.Success();
             }
             catch (Exception ex)
@@ -44,10 +72,10 @@ namespace PCCCC.Service.Services
         {
             try
             {
-                var role = await _roleRepository.GetFirstOrDefaultAsync(x => x.Id == ID && !x.IsActive);
+                var role = await _roleRepository.GetFirstOrDefaultAsync(x => x.Id.Equals(ID));
                 if (role == null) return JsonResponse.Error(PCCCConsts.ERROR_ROLE_NOT_FOUND, PCCCConsts.MESSAGE_ROLE_NOT_FOUND);
-                role.IsActive = true;
-                await _roleRepository.UpdateAsync(role);
+                //Xóa cứng
+                await _roleRepository.DeleteAsync(role);
                 return JsonResponse.Success();
             }
             catch (Exception Ex)
@@ -57,44 +85,7 @@ namespace PCCCC.Service.Services
             }
         }
 
-        public async Task<JsonResultModel> GetListRole(int page, int limit, string SearchKey, int? status, string fromDate, string toDate)
-        {
-            try
-            {
-                var list = await _roleRepository.GetRoles(page, limit, SearchKey, status, fromDate, toDate);
-                DataPagedListModel dataPagedListModel = new DataPagedListModel()
-                {
-                    Data = list,
-                    Limit = limit,
-                    Page = page,
-                    TotalItemCount = list.TotalItemCount
-                };
-                return JsonResponse.Success(dataPagedListModel);
-            }
-            catch (Exception ex)
-            {
-                return JsonResponse.ServerError();
-            }
-        }
-        public async Task<JsonResultModel> UpdateRole(UpdateRoleModel model)
-        {
-            try
-            {
-                // lấy bản ghi trong cơ sở dữ liệu
-                var record = await _roleRepository.GetFirstOrDefaultAsync(x => x.Id.Equals(model.Id));
-                if (record == null) return JsonResponse.Error(PCCCConsts.ERROR_ROLE_NOT_FOUND, PCCCConsts.MESSAGE_ROLE_NOT_FOUND);
-                // Gán các giá trị cho bản ghi
-                record.DisplayName = model.DisplayName;
-                record.Note = model.Note;
-                record.IsActive = model.IsActive;
-                var res = await _roleRepository.UpdateAsync(record);
-                // cập nhật thành công 
-                return JsonResponse.Success();
-            }
-            catch (Exception ex)
-            {
-                return JsonResponse.ServerError();
-            }
-        }
+       
+       
     }
 }

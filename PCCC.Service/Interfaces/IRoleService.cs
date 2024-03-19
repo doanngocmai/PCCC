@@ -10,6 +10,6 @@ namespace PCCC.Service.Services
         Task<JsonResultModel> CreateRole(CreateRoleModel usermodel);
         Task<JsonResultModel> UpdateRole(UpdateRoleModel model);
         Task<JsonResultModel> DeleteRole(int ID);
-        Task<JsonResultModel> GetListRole(int page, int limit, string SearchKey, int? status, string fromDate, string toDate);
+        Task<JsonResultModel> GetListRole(RoleSearchPageResults param);
     }
 }
