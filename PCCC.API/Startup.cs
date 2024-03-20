@@ -1,101 +1,156 @@
-﻿//using Microsoft.AspNetCore.Authentication.Cookies;
-//using Microsoft.IdentityModel.Logging;
-//using Microsoft.OpenApi.Models;
-//using PCCC.API.Entities;
-//using PCCC.Common.Extensions;
-//using PCCC.Data;
-//using PCCC.Repository.Interfaces;
+﻿using PCCC.Data;
+using PCCC.Repository.Interfaces;
+using PCCC.Repository;
+using PCCC.Service.Interfaces;
+using PCCC.Service.Services;
+using PCCC.Service;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using System.Reflection;
+using PCCC.API.Middleware;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using AutoMapper;
+using PCCCC.Service.Services;
 
-//namespace PCCC.API
-//{
-//    public class Startup
-//    {
-//        public Startup(IConfiguration configuration)
-//        {
-//            Configuration = configuration;
-//        }
+namespace PCCC
+{
+    public class Startup
+    {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        }
 
-//        public IConfiguration Configuration { get; }
-
-//        // This method gets called by the runtime. Use this method to add services to the container.
-//        public void ConfigureServices(IServiceCollection services)
-//        {
-//            services.AddCors(
-//                   opt => opt.AddPolicy("AllowAllHeaders",
-//                       builder => builder
-//                       .AllowAnyMethod()
-//                       .AllowAnyHeader()
-//                       .AllowAnyOrigin()
-//                   )
-//               );
-
-//            services.AddDbContext<PcccContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("main")));
-
-//            services.AddScoped(typeof(I), typeof(Data.PcccContext));
-//            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-
-//            services.RegisterTransient(typeof(ITransientRepository));
-//            services.RegisterTransient(typeof(ITransientService));
-
-//            //IdentityModelEventSource.ShowPII = true;
-//            //services.AddAuthentication(options =>
-//            //{
-//            //    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-//            //    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-//            //    options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-//            //})
-//            //.AddCookie()
-//            //.AddOpenIdConnect(options =>
-//            //{
-//            //    options.Authority = Configuration["Authentication:oidc:Authority"];
-//            //    options.ClientId = Configuration["Authentication:oidc:ClientId"];
-//            //    options.ClientSecret = Configuration["Authentication:oidc:ClientSecret"];
-//            //    options.RequireHttpsMetadata = false;
-//            //    options.GetClaimsFromUserInfoEndpoint = true;
-//            //    options.SaveTokens = true;
-//            //    options.RemoteSignOutPath = "/swagger/index.html";
-//            //    options.SignedOutRedirectUri = "Redirect-here";
-//            //    options.ResponseType = "code";
-
-//            //});
-
-//            services.AddControllers();
-//            services.AddSwaggerGen(c =>
-//            {
-//                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyrEdu.Admin.API", Version = "v1" });
-//            });
-//        }
+        public IConfiguration Configuration { get; set; }
+        // This method gets called by the runtime. Use this method to add services to the container.
+        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 
 
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(Startup));
+            services.AddControllersWithViews();
+            services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                builder => builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader());
+            });
+           
+            services.AddAutoMapper(typeof(MappingProfile));
+            services.AddDbContext<PcccContext>(options => options.UseNpgsql(Configuration.GetConnectionString("main")));
 
-//        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-//        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-//        {
-//            if (env.IsDevelopment())
-//            {
-//                app.UseDeveloperExceptionPage();
-//            }
-//            app.UseSwagger();
-//            app.UseSwaggerUI(options =>
-//            {
-//                options.SwaggerEndpoint("/swagger/WebClient/swagger.json", "WebClient API");
-//                options.SwaggerEndpoint("/swagger/WebAdmin/swagger.json", "WebAdmin API");
-//            });
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(1);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            //check token [Authorize]
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("WebClient", new OpenApiInfo { Title = "WebClient API", Version = "WebClient" });
+                c.SwaggerDoc("WebAdmin", new OpenApiInfo { Title = "Web Admin API", Version = "WebAdmin" });
+                c.DocInclusionPredicate((docName, apiDesc) =>
+                {
+                    if (string.IsNullOrEmpty(apiDesc.GroupName))
+                    {
+                        if (docName == "WebClient")
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        if (docName == apiDesc.GroupName)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
 
-//            app.UseRouting();
+                });
 
-//            app.UseAuthorization();
+            });
+            services.AddDistributedMemoryCache();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-//            app.UseEndpoints(endpoints =>
-//            {
-//                endpoints.MapControllers();
-//            });
-//            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-//            {
-//                var context = serviceScope.ServiceProvider.GetRequiredService<Data.PcccContext>();
-//                context.Database.EnsureCreated();
-//            }
-//        }
+            ConfigureCoreAndRepositoryService(services);
+        }
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
 
-//    }
-//}
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            //sử dụng swagger
+            //app.UseSwaggerUI(c =>
+            //{
+            //    c.SwaggerEndpoint("/swagger/App/swagger.json", "App API");
+            //    c.SwaggerEndpoint("/swagger/WebAdmin/swagger.json", "WebAdmin API");
+            //    c.RoutePrefix = string.Empty;
+            //    c.OAuthUseBasicAuthenticationWithAccessCodeGrant();
+            //    c.DocExpansion(DocExpansion.None);
+            //    c.DefaultModelsExpandDepth(-1);
+            //});
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/WebClient/swagger.json", "WebClient API");
+                options.SwaggerEndpoint("/swagger/WebAdmin/swagger.json", "WebAdmin API");
+            });
+            app.UseDeveloperExceptionPage();
+            //app.UseMiddleware<JWTMiddleware>();
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+            app.UseCors("CorsPolicy");
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Login}/{action=LoginWeb}/{id?}");
+            });
+        }
+        private void ConfigureCoreAndRepositoryService(IServiceCollection services)
+        {
+            // basse
+            services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
+            services.AddScoped(typeof(IServices<>), typeof(BaseService<>));
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IContentRepository, ContentRepository>();
+            services.AddScoped<IContentService, ContentService>();
+
+            // Add Mapter Singler 
+            var mp = new MapperConfiguration((MapperContext) => MapperContext.AddProfile(new MappingProfile()));
+            services.AddSingleton(mp.CreateMapper());
+
+        }
+    }
+}

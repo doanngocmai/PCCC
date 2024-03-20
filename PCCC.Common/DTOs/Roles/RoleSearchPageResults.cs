@@ -12,7 +12,7 @@ namespace PCCC.Common.DTOs.Roles
         public int page { get; set; } = PCCCConsts.PAGE_DEFAULT;
         public int perPage { get; set; } = PCCCConsts.LIMIT_DEFAULT;
         public string? SearchKey { get; set; }
-        public int? IsActive { get; set; }
+        public bool? IsActive { get; set; }
         public string? fromDate { get; set; }
         public string? toDate { get; set; }
 

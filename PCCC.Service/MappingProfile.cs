@@ -18,6 +18,7 @@ namespace PCCC.Service
             CreateMap<User, UserModel>();
             CreateMap<User, CreateUserModel>();
             CreateMap<Role, CreateRoleModel>();
+            CreateMap<Role, UpdateRoleModel>();
             CreateMap<Content, CreateContentModel>();
         }
 
@@ -25,7 +26,9 @@ namespace PCCC.Service
         {
             // case insert or update
             CreateMap<UserModel, User>();
+            CreateMap<CreateUserModel, User>();
             CreateMap<UpdateUserModel, User>();
+            CreateMap<CreateRoleModel, Role>();
             CreateMap<UpdateRoleModel, Role>();
             CreateMap<UpdateContentModel, Content>();
         }

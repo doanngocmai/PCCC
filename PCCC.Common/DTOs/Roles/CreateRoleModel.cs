@@ -9,9 +9,9 @@ namespace PCCC.Common.DTOs.Roles
 {
     public class CreateRoleModel
     {
-        public string RoleName { get; set; }
+        public string RoleName { get; set; } = null!;
 
-        public string DisplayName { get; set; }
+        public string DisplayName { get; set; } = null!;
 
         public string? Note { get; set; }
 
