@@ -18,6 +18,6 @@ namespace PCCC.Service.Interfaces
         Task<JsonResultModel> CreateContent(CreateContentModel model);
         Task<JsonResultModel> UpdateContent(UpdateContentModel model);
         Task<JsonResultModel> DeleteContent(int ID);
-        Task<JsonResultModel> GetListContent(int page, int limit, string SearchKey, int? status, string fromDate, string toDate);
+        Task<JsonResultModel> GetListContent(ContentSearchPageResults param);
     }
 }

@@ -6,7 +6,7 @@ namespace PCCC.Repository.Interfaces
 {
     public interface IUserRepository : IRepository<User>
     {
-        Task<IPagedList<UserModel>> GetUsers(int page, int limit, string SearchKey, int? role, int? status, string fromDate, string toDate);
+        Task<IPagedList<UserModel>> GetUsers(UserSearchPageResults param);
     }
 
 

@@ -12,6 +12,6 @@ namespace PCCC.Service.Services
         Task<JsonResultModel> CreateUser(CreateUserModel usermodel);
         Task<JsonResultModel> UpdateUser(UpdateUserModel model);
         Task<JsonResultModel> DeleteUser(int ID);
-        Task<JsonResultModel> GetListUser(int page, int limit, string SearchKey, int? role, int? status, string fromDate, string toDate);
+        Task<JsonResultModel> GetListUser(UserSearchPageResults param);
     }
 }

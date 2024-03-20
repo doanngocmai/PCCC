@@ -16,16 +16,16 @@ namespace PCCC.Repository
 
         }
 
-        public async Task<IPagedList<ContentModel>> GetContents(int page, int limit, string SearchKey, int? status, string fromDate, string toDate)
+        public async Task<IPagedList<ContentModel>> GetContents(ContentSearchPageResults param)
         {
             try
             {
                 return await Task.Run(() =>
                 {
-                    var fd = Util.ConvertFromDate(fromDate);
-                    var td = Util.ConvertToDate(toDate);
+                    var fd = Util.ConvertFromDate(param.fromDate);
+                    var td = Util.ConvertToDate(param.toDate);
                 var model = (from u in DbContext.Contents
-                             where (!string.IsNullOrEmpty(SearchKey) ? u.Name.Contains(SearchKey) : true && status.HasValue ? u.IsActive.Equals(status) : true)
+                             where (!string.IsNullOrEmpty(param.SearchKey) ? u.Name.Contains(param.SearchKey) : true && param.IsActive.HasValue ? u.IsActive == param.IsActive : true)
                                  select new ContentModel
                                  {
                                      Id = u.Id,
@@ -37,7 +37,7 @@ namespace PCCC.Repository
                                      Icon = u.Icon,
                                      IsActive = u.IsActive,
                                      CreationTime = u.CreationTime,
-                                 }).AsQueryable().ToPagedList(page, limit);
+                                 }).AsQueryable().ToPagedList(param.page, param.perPage);
                     return model;
                 });
             }

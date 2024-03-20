@@ -16,17 +16,17 @@ namespace PCCC.Repository
 
         }
 
-        public async Task<IPagedList<UserModel>> GetUsers(int page, int limit, string SearchKey, int? role, int? status, string fromDate, string toDate)
+        public async Task<IPagedList<UserModel>> GetUsers(UserSearchPageResults param)
         {
             try
             {
                 return await Task.Run(() =>
                 {
-                    var fd = Util.ConvertFromDate(fromDate);
-                    var td = Util.ConvertToDate(toDate);
+                    var fd = Util.ConvertFromDate(param.fromDate);
+                    var td = Util.ConvertToDate(param.toDate);
                     var model = (from u in DbContext.Users
-                                 where (u.IsDelete && !string.IsNullOrEmpty(SearchKey) ? (u.UserName.Contains(SearchKey) || u.Phone.Contains(SearchKey)) : true)
-                                 && (status.HasValue ? u.IsActive.Equals(status) : true)
+                                 where (u.IsDelete && !string.IsNullOrEmpty(param.SearchKey) ? (u.UserName.Contains(param.SearchKey) || u.Phone.Contains(param.SearchKey)) : true)
+                                 && (param.IsActive.HasValue ? u.IsActive == param.IsActive : true)
                                  select new UserModel
                                  {
                                      ID = u.Id,
@@ -41,7 +41,7 @@ namespace PCCC.Repository
                                      CreatorUserName = u.CreatorUserName,
                                      CreationTime = u.CreationTime,
 
-                                 }).AsQueryable().ToPagedList(page, limit);
+                                 }).AsQueryable().ToPagedList(param.page, param.perPage);
                     return model;   
                 });
             }

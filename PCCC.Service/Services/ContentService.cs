@@ -24,16 +24,16 @@ namespace PCCC.Service.Services
             _contentRepository = contentRepository;
             _mapper = mapper;
         }
-        public async Task<JsonResultModel> GetListContent(int page, int limit, string SearchKey, int? status, string fromDate, string toDate)
+        public async Task<JsonResultModel> GetListContent(ContentSearchPageResults param)
         {
             try
             {
-                var list = await _contentRepository.GetContents(page, limit, SearchKey, status, fromDate, toDate);
+                var list = await _contentRepository.GetContents(param);
                 DataPagedListModel dataPagedListModel = new DataPagedListModel()
                 {
                     Data = list,
-                    Limit = limit,
-                    Page = page,
+                    Limit = param.perPage,
+                    Page = param.page,
                     TotalItemCount = list.TotalItemCount
                 };
                 return JsonResponse.Success(dataPagedListModel);

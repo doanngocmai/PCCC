@@ -40,16 +40,16 @@ namespace PCCC.Service.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
-        public async Task<JsonResultModel> GetListUser(int page, int limit, string SearchKey, int? role, int? status, string fromDate, string toDate)
+        public async Task<JsonResultModel> GetListUser(UserSearchPageResults param)
         {
             try
             {
-                var list = await _userRepository.GetUsers(page, limit, SearchKey, role, status, fromDate, toDate);
+                var list = await _userRepository.GetUsers(param);
                 DataPagedListModel dataPagedListModel = new DataPagedListModel()
                 {
                     Data = list,
-                    Limit = limit,
-                    Page = page,
+                    Limit = param.perPage,
+                    Page = param.page,
                     TotalItemCount = list.TotalItemCount
                 };
                 return JsonResponse.Success(dataPagedListModel);

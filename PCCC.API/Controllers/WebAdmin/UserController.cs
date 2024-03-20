@@ -21,9 +21,9 @@ namespace PCCC.API.Controllers.WebAdmin
         }
         [HttpGet("GetListUser")]
         //[Authorize]
-        public async Task<JsonResultModel> GetListUser(int page = PCCCConsts.PAGE_DEFAULT, int limit = PCCCConsts.LIMIT_DEFAULT, string SearchKey = null, int? role = null, int? status = null, string fromDate = null, string toDate = null)
+        public async Task<JsonResultModel> GetListUser([FromQuery] UserSearchPageResults param)
         {
-            return await _userService.GetListUser(page, limit, SearchKey, role, status, fromDate, toDate);
+            return await _userService.GetListUser(param);
         }
         //[Authorize]
         [HttpPost("CreateUser")]

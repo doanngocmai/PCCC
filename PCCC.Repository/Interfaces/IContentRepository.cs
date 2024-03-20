@@ -7,6 +7,6 @@ namespace PCCC.Repository.Interfaces
 {
     public interface IContentRepository : IRepository<Content>
     {
-       Task<IPagedList<ContentModel>> GetContents(int page, int limit, string SearchKey, int? status, string fromDate, string toDate);
+        Task<IPagedList<ContentModel>> GetContents(ContentSearchPageResults param);
     }
 }

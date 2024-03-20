@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PCCC.Common.DTOs.Authentications;
 using PCCC.Common.DTOs.Contents;
 using PCCC.Common.DTOs.Roles;
 using PCCC.Common.Utils;
@@ -23,9 +24,9 @@ namespace PCCC.API.Controllers.WebAdmin
         }
         [HttpGet("GetListContent")]
         //[Authorize]
-        public async Task<JsonResultModel> GetListContent(int page = PCCCConsts.PAGE_DEFAULT, int limit = PCCCConsts.LIMIT_DEFAULT, string SearchKey = null, int? status = null, string fromDate = null, string toDate = null)
+        public async Task<JsonResultModel> GetListContent([FromQuery] ContentSearchPageResults param)
         {
-            return await _contentService.GetListContent(page, limit, SearchKey, status, fromDate, toDate);
+            return await _contentService.GetListContent(param);
         }
         //[Authorize]
         [HttpPost("CreateContent")]
