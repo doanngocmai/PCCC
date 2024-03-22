@@ -67,7 +67,7 @@ namespace PCCC.Service.Services
                 var record = await _contentRepository.GetFirstOrDefaultAsync(x => x.Id.Equals(model.Id));
                 if (record == null) return JsonResponse.Error(PCCCConsts.ERROR_CONTENT_NOT_FOUND, PCCCConsts.MESSAGE_CONTENT_NOT_FOUND);
                 var valid = await _contentRepository.GetFirstOrDefaultAsync(x => x.Id != model.Id && x.Name == model.Name && x.Type == model.Type );
-                if (record == null) return JsonResponse.Error(PCCCConsts.ERROR_CONTENT_ALREADY_EXIST, PCCCConsts.MESSAGE_CONTENT_ALREADY_EXIST);
+                if (valid != null) return JsonResponse.Error(PCCCConsts.ERROR_CONTENT_ALREADY_EXIST, PCCCConsts.MESSAGE_CONTENT_ALREADY_EXIST);
                 _mapper.Map(model, record);
                 var res = await _contentRepository.UpdateAsync(record);
                 return JsonResponse.Success();

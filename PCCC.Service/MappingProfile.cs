@@ -20,6 +20,7 @@ namespace PCCC.Service
             CreateMap<Role, CreateRoleModel>();
             CreateMap<Role, UpdateRoleModel>();
             CreateMap<Content, CreateContentModel>();
+            CreateMap<Content, UpdateContentModel>();
         }
 
         private void MappingViewModelToEntity()
@@ -30,6 +31,7 @@ namespace PCCC.Service
             CreateMap<UpdateUserModel, User>();
             CreateMap<CreateRoleModel, Role>();
             CreateMap<UpdateRoleModel, Role>();
+            CreateMap<CreateContentModel, Content>();
             CreateMap<UpdateContentModel, Content>();
         }
     }

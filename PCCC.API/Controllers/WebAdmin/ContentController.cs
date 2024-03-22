@@ -34,7 +34,7 @@ namespace PCCC.API.Controllers.WebAdmin
         {
             return await _contentService.CreateContent(model);
         }
-        [HttpPost("UpdateRole")]
+        [HttpPost("UpdateContent")]
         //[Authorize]
         public async Task<JsonResultModel> UpdateContent(UpdateContentModel input)
         {
