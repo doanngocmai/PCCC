@@ -47,7 +47,7 @@ namespace PCCC.API.Controllers.WebAdmin
         /// </summary>
         /// <param name="ID"></param>
         /// <returns></returns>
-        [HttpPost("DeleteRole/{ID}")]
+        [HttpDelete("DeleteRole/{ID}")]
         //[Authorize]
         public async Task<JsonResultModel> DeleteRole(int ID)
         {

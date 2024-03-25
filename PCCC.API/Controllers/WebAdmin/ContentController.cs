@@ -40,7 +40,7 @@ namespace PCCC.API.Controllers.WebAdmin
         {
             return await _contentService.UpdateContent(input);
         }
-        [HttpPost("DeleteRole/{ID}")]
+        [HttpDelete("DeleteContent/{ID}")]
         //[Authorize]
         public async Task<JsonResultModel> DeleteContent(int ID)
         {

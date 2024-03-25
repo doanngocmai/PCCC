@@ -37,7 +37,7 @@ namespace PCCC.API.Controllers.WebAdmin
         {
             return await _userService.UpdateUser(input);
         }
-        [HttpPost("DeleteUser/{ID}")]
+        [HttpDelete("DeleteUser/{ID}")]
         //[Authorize]
         public async Task<JsonResultModel> DeleteUser(int ID)
         {
