@@ -25,11 +25,11 @@ namespace PCCC.Repository
                     var fd = Util.ConvertFromDate(param.fromDate);
                     var td = Util.ConvertToDate(param.toDate);
                     var model = (from u in DbContext.Users
-                                 where (u.IsDelete && !string.IsNullOrEmpty(param.SearchKey) ? (u.UserName.Contains(param.SearchKey) || u.Phone.Contains(param.SearchKey)) : true)
+                                 where (u.IsDelete && u.Level == PCCCConsts.UserWebAmin && !string.IsNullOrEmpty(param.SearchKey) ? (u.UserName.Contains(param.SearchKey) || u.Phone.Contains(param.SearchKey)) : true)
                                  && (param.IsActive.HasValue ? u.IsActive == param.IsActive : true)
                                  select new UserModel
                                  {
-                                     ID = u.Id,
+                                     Id = u.Id,
                                      Email = u.Email,
                                      Phone = u.Phone,
                                      UserName = u.UserName,  
@@ -39,6 +39,7 @@ namespace PCCC.Repository
                                      Amount = u.Amount,
                                      Sex = u.Sex,
                                      CreatorUserName = u.CreatorUserName,
+                                     Password = u.Password,
                                      CreationTime = u.CreationTime,
 
                                  }).AsQueryable().ToPagedList(param.page, param.perPage);

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PCCC.Common.DTOs.Buildings;
 using PCCC.Common.DTOs.Contents;
 using PCCC.Common.DTOs.News;
 using PCCC.Common.DTOs.Roles;
@@ -23,7 +24,9 @@ namespace PCCC.Service
             CreateMap<Content, CreateContentModel>();
             CreateMap<Content, UpdateContentModel>();
             CreateMap<News, CreateNewModel>();
-            CreateMap<News, UpdateNewModel>();
+            CreateMap<News, UpdateNewModel>();            
+            CreateMap<Building, CreateBuildingModel>();
+            CreateMap<Building, UpdateBuildingModel>();
         }
 
         private void MappingViewModelToEntity()
@@ -37,7 +40,9 @@ namespace PCCC.Service
             CreateMap<CreateContentModel, Content>();
             CreateMap<UpdateContentModel, Content>();
             CreateMap<CreateNewModel, News>();
-            CreateMap<UpdateNewModel, News>();
+            CreateMap<UpdateNewModel, News>();           
+            CreateMap<CreateBuildingModel, Building>();
+            CreateMap<UpdateBuildingModel, Building >();
         }
     }
 }

@@ -94,7 +94,7 @@ namespace PCCC.Service.Services
                 //    var _email = await _userRepository.GetFirstOrDefaultAsync(e => e.Email == model.Email);
                 //    if (_email != null) return JsonResponse.Error(PCCCConsts.ERROR_REGISTER_EMAIL_EXIST, PCCCConsts.MESSAGE_REGISTER_EMAIL_EXIST);
                 //}
-                // GenPassword 
+                // GenPassword
                 string password = Util.GenPass(model.Password);
 
                 var userNew = _mapper.Map<User>(model);
@@ -115,14 +115,14 @@ namespace PCCC.Service.Services
         {
             try
             {
-                var record = await _userRepository.GetFirstOrDefaultAsync(x => x.IsActive.Equals(PCCCConsts.ACTIVE) && x.Id.Equals(model.ID));
+                var record = await _userRepository.GetFirstOrDefaultAsync(x => x.IsActive.Equals(PCCCConsts.ACTIVE) && x.Id.Equals(model.Id));
                 if (record == null) return JsonResponse.Error(PCCCConsts.ERROR_USER_NOT_FOUND, PCCCConsts.MESSAGE_USER_NOT_FOUND);
                 //if (!Util.validPhone(model.Phone))
                 //    return JsonResponse.Error(PCCCConsts.ERROR_REGISTER_PHONE_INVALID, PCCCConsts.MESSAGE_REGISTER_PHONE_INVALID);
                 //if (!Util.ValidateEmail(model.Email))
                 //    return JsonResponse.Error(PCCCConsts.ERROR_REGISTER_EMAIL_INVALID, PCCCConsts.MESSAGE_REGISTER_EMAIL_INVALID);
                 //var Email = await _userRepository.GetFirstOrDefaultAsync(x => x.Email.Equals(model.Email) && (x.Id != model.ID));
-                var Phone = await _userRepository.GetFirstOrDefaultAsync(x => x.Phone.Equals(model.Phone) && (x.Id != model.ID));
+                var Phone = await _userRepository.GetFirstOrDefaultAsync(x => x.Phone.Equals(model.Phone) && (x.Id != model.Id));
 
                 //if (Email != null) return JsonResponse.Error(PCCCConsts.ERROR_CODE, PCCCConsts.MESSAGE_REGISTER_EMAIL_EXIST);
                 if (Phone != null) return JsonResponse.Error(PCCCConsts.ERROR_CODE, PCCCConsts.MESSAGE_REGISTER_PHONE_EXIST);

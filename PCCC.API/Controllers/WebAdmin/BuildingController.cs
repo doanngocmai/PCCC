@@ -15,37 +15,37 @@ namespace PCCC.API.Controllers.WebAdmin
     [Route("api/web/[controller]")]
     [ApiExplorerSettings(GroupName = "WebAdmin")]
     [ApiController]
-    [SwaggerTag("Content")]
+    [SwaggerTag("Building")]
     public class BuildingController : ControllerBase
     {
-        public readonly IBuildingService _contentService;
-        public BuildingController(IBuildingService contentService)
+        public readonly IBuildingService _buildingService;
+        public BuildingController(IBuildingService buildingService)
         {
-            _contentService = contentService;
+            _buildingService = buildingService;
         }
-        [HttpGet("GetListContent")]
+        [HttpGet("GetListBuilding")]
         //[Authorize]
-        public async Task<JsonResultModel> GetListContent([FromQuery] BuildingSearchPageResults param)
+        public async Task<JsonResultModel> GetListBuilding([FromQuery] BuildingSearchPageResults param)
         {
-            return await _contentService.GetListContent(param);
+            return await _buildingService.GetListBuilding(param);
         }
         //[Authorize]
-        [HttpPost("CreateContent")]
-        public async Task<JsonResultModel> CreateContents(CreateBuildingModel model)
+        [HttpPost("CreateBuilding")]
+        public async Task<JsonResultModel> CreateBuilding(CreateBuildingModel model)
         {
-            return await _contentService.CreateContent(model);
+            return await _buildingService.CreateBuilding(model);
         }
-        [HttpPost("UpdateContent")]
+        [HttpPost("UpdateBuilding")]
         //[Authorize]
-        public async Task<JsonResultModel> UpdateContent(UpdateBuildingModel input)
+        public async Task<JsonResultModel> UpdateBuilding(UpdateBuildingModel input)
         {
-            return await _contentService.UpdateContent(input);
+            return await _buildingService.UpdateBuilding(input);
         }
-        [HttpDelete("DeleteContent/{ID}")]
+        [HttpDelete("DeleteBuilding/{ID}")]
         //[Authorize]
-        public async Task<JsonResultModel> DeleteContent(int ID)
+        public async Task<JsonResultModel> DeleteBuilding(int ID)
         {
-            return await _contentService.DeleteContent(ID);
+            return await _buildingService.DeleteBuilding(ID);
         }
     }
 }

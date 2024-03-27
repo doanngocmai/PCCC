@@ -6,18 +6,23 @@ namespace PCCC.Common.DTOs.Users
 {
    public class UpdateUserModel
     {
-        public int ID { get; set; }
-        
-        public string Name { get; set; }
-        public string Phone { get; set; }
-        public string  Email { get; set; }
-        public int RoleID { get; set; }
-        public int Status { get; set; }
-    }
+        public int Id { get; set; }
+        public string? FullName { get; set; }
 
-    public class UpdateUserModelNew
-    {
-        public string Email { get; set; }
-        public string Address { get; set; }
+        public bool Sex { get; set; }
+
+        public string? Address { get; set; }
+
+        public string Password { get; set; } = null!;
+
+        public float Amount { get; set; }
+
+        public int IsActive { get; set; }
+
+        public string UserName { get; set; } = null!;
+
+        public string Phone { get; set; } = null!;
+
+        public string Email { get; set; } = null!;
     }
 }

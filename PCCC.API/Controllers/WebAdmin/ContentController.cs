@@ -30,7 +30,7 @@ namespace PCCC.API.Controllers.WebAdmin
         }
         //[Authorize]
         [HttpPost("CreateContent")]
-        public async Task<JsonResultModel> CreateContents(CreateContentModel model)
+        public async Task<JsonResultModel> CreateContent(CreateContentModel model)
         {
             return await _contentService.CreateContent(model);
         }

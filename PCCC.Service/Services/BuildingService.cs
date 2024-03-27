@@ -23,7 +23,7 @@ namespace PCCC.Service.Services
             _buildingRepository = buildingRepository;
             _mapper = mapper;
         }
-        public async Task<JsonResultModel> GetListContent(BuildingSearchPageResults param)
+        public async Task<JsonResultModel> GetListBuilding(BuildingSearchPageResults param)
         {
             try
             {
@@ -42,13 +42,13 @@ namespace PCCC.Service.Services
                 return JsonResponse.ServerError();
             }
         }
-        public async Task<JsonResultModel> CreateContent(CreateBuildingModel model)
+        public async Task<JsonResultModel> CreateBuilding(CreateBuildingModel model)
         {
             try
             {
-                var content = _mapper.Map<Building>(model);
-                content.CreationTime = DateTime.Now;
-                await _buildingRepository.AddAsync(content);
+                var building = _mapper.Map<Building>(model);
+                building.CreationTime = DateTime.Now;
+                await _buildingRepository.AddAsync(building);
                 return JsonResponse.Success();
             }
             catch (Exception ex)
@@ -56,7 +56,7 @@ namespace PCCC.Service.Services
                 return JsonResponse.ServerError();
             }
         }
-        public async Task<JsonResultModel> UpdateContent(UpdateBuildingModel model)
+        public async Task<JsonResultModel> UpdateBuilding(UpdateBuildingModel model)
         {
             try
             {
@@ -71,12 +71,12 @@ namespace PCCC.Service.Services
                 return JsonResponse.ServerError();
             }
         }
-        public async Task<JsonResultModel> DeleteContent(int ID)
+        public async Task<JsonResultModel> DeleteBuilding(int ID)
         {
             try
             {
-                var content = await _buildingRepository.GetFirstOrDefaultAsync(x => x.Id.Equals(ID));
-                await _buildingRepository.DeleteAsync(content);
+                var building = await _buildingRepository.GetFirstOrDefaultAsync(x => x.Id.Equals(ID));
+                await _buildingRepository.DeleteAsync(building);
                 return JsonResponse.Success();
             }
             catch (Exception Ex)

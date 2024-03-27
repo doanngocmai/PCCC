@@ -18,12 +18,6 @@ namespace PCCC.Common.DTOs.Users
 
         public int IsActive { get; set; }
 
-        //public long? UpgradeAccId { get; set; }
-
-        //public long? BuildingId { get; set; }
-
-        //public long? ApartmentUserId { get; set; }
-
         public string UserName { get; set; } = null!;
 
         public string Phone { get; set; } = null!;

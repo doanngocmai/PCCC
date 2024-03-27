@@ -14,9 +14,9 @@ namespace PCCC.Service.Interfaces
     public interface IBuildingService : IServices<Building>
     {
 
-        Task<JsonResultModel> CreateContent(CreateBuildingModel model);
-        Task<JsonResultModel> UpdateContent(UpdateBuildingModel model);
-        Task<JsonResultModel> DeleteContent(int ID);
-        Task<JsonResultModel> GetListContent(BuildingSearchPageResults param);
+        Task<JsonResultModel> CreateBuilding(CreateBuildingModel model);
+        Task<JsonResultModel> UpdateBuilding(UpdateBuildingModel model);
+        Task<JsonResultModel> DeleteBuilding(int ID);
+        Task<JsonResultModel> GetListBuilding(BuildingSearchPageResults param);
     }
 }
