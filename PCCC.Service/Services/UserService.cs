@@ -85,15 +85,10 @@ namespace PCCC.Service.Services
         {
             try
             {
-                //if (!Util.validPhone(model.Phone))
-                //    return JsonResponse.Error(PCCCConsts.ERROR_REGISTER_PHONE_INVALID, PCCCConsts.MESSAGE_REGISTER_PHONE_INVALID);
                 var username = await _userRepository.GetFirstOrDefaultAsync(x => x.UserName == model.UserName && !x.IsDelete);
-                if (username != null) return JsonResponse.Error(PCCCConsts.ERROR_USERNAME_ALREADY_EXIST, PCCCConsts.MESSAGE_USERNAME_ALREADY_EXIST);
-                //if (!String.IsNullOrEmpty(model.Email))
-                //{
-                //    var _email = await _userRepository.GetFirstOrDefaultAsync(e => e.Email == model.Email);
-                //    if (_email != null) return JsonResponse.Error(PCCCConsts.ERROR_REGISTER_EMAIL_EXIST, PCCCConsts.MESSAGE_REGISTER_EMAIL_EXIST);
-                //}
+                if (username != null) return JsonResponse.Error(PCCCConsts.ERROR_USERNAME_ALREADY_EXIST, PCCCConsts.MESSAGE_USERNAME_ALREADY_EXIST);          
+                var phone = await _userRepository.GetFirstOrDefaultAsync(x => x.Phone == model.Phone && !x.IsDelete);
+                if (phone != null) return JsonResponse.Error(PCCCConsts.ERROR_REGISTER_PHONE_EXIST, PCCCConsts.MESSAGE_REGISTER_PHONE_EXIST);
                 // GenPassword
                 string password = Util.GenPass(model.Password);
 
@@ -117,16 +112,11 @@ namespace PCCC.Service.Services
             {
                 var record = await _userRepository.GetFirstOrDefaultAsync(x => x.IsActive.Equals(PCCCConsts.ACTIVE) && x.Id.Equals(model.Id));
                 if (record == null) return JsonResponse.Error(PCCCConsts.ERROR_USER_NOT_FOUND, PCCCConsts.MESSAGE_USER_NOT_FOUND);
-                //if (!Util.validPhone(model.Phone))
-                //    return JsonResponse.Error(PCCCConsts.ERROR_REGISTER_PHONE_INVALID, PCCCConsts.MESSAGE_REGISTER_PHONE_INVALID);
-                //if (!Util.ValidateEmail(model.Email))
-                //    return JsonResponse.Error(PCCCConsts.ERROR_REGISTER_EMAIL_INVALID, PCCCConsts.MESSAGE_REGISTER_EMAIL_INVALID);
-                //var Email = await _userRepository.GetFirstOrDefaultAsync(x => x.Email.Equals(model.Email) && (x.Id != model.ID));
-                var Phone = await _userRepository.GetFirstOrDefaultAsync(x => x.Phone.Equals(model.Phone) && (x.Id != model.Id));
-
-                //if (Email != null) return JsonResponse.Error(PCCCConsts.ERROR_CODE, PCCCConsts.MESSAGE_REGISTER_EMAIL_EXIST);
-                if (Phone != null) return JsonResponse.Error(PCCCConsts.ERROR_CODE, PCCCConsts.MESSAGE_REGISTER_PHONE_EXIST);
-
+                //check
+                var Phone = await _userRepository.GetFirstOrDefaultAsync(x => x.Phone.Equals(model.Phone) && x.Id != model.Id && !x.IsDelete);
+                if (Phone != null) return JsonResponse.Error(PCCCConsts.ERROR_REGISTER_PHONE_EXIST, PCCCConsts.MESSAGE_REGISTER_PHONE_EXIST);
+                var username = await _userRepository.GetFirstOrDefaultAsync(x => x.UserName == model.UserName && x.Id != model.Id && !x.IsDelete);
+                if (username != null) return JsonResponse.Error(PCCCConsts.ERROR_USERNAME_ALREADY_EXIST, PCCCConsts.MESSAGE_USERNAME_ALREADY_EXIST);
                 _mapper.Map(model, record);
                 await _userRepository.UpdateAsync(record);
                 return JsonResponse.Success();

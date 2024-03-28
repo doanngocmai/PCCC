@@ -98,10 +98,6 @@ namespace PCCC.Common.Utils
         public const string MESSAGE_OTP_TRY_EXCEED = "Bạn đã vượt quá số lần gửi lại mã OTP , xin vui lòng thử lại sau 5 phút";
         public const int ERROR_PHONE_NOT_EXIST = 7;
         public const string MESSAGE_PHONE_NOT_EXIST = "Số điện thoại không tồn tại";
-        public const int ERROR_PHONE_NOT_OTP = 8;
-        public const string MESSAGE_PHONE_NOT_OTP = "Mã OTP không hợp lệ";
-        public const int ERROR_PHONE_OTP_EXPIRED = 9;
-        public const string MESSAGE_PHONE_OTP_EXPIRED = "Mã OTP đã hết hạn";
 
         // Upload File
         public const int ERROR_FILE_NOT_FOUND = 1;
@@ -110,10 +106,6 @@ namespace PCCC.Common.Utils
         // Password
         public const int ERROR_CODE_CUSOTMER_LOCK = 1;
         public const string MESSAGE_LOCK_CUSTOMER = "Tài khoản khách hàng đang bị khóa";
-        public const string MESSAGE_NOT_CONFIRM_OTP = "Vui Lòng xác nhận OTP trước khi đổi MK";
-        public const int CODE_NOT_CONFIRM_OTP = 2;
-        public const int ERROR_CUSOTMER_NOT_EXSIST = 1;
-        public const string MESSAGE_CUSOTMER_NOT_EXSIST = "Khách hàng không tồn tại";
         public const int ERROR_CHECK_PASSWORD_NOT_EXSIST = 3;
         public const string MESSAGE_CHECK_PASSWORD_NOT_EXSIST = "Mật khẩu không đúng";
 
@@ -123,7 +115,7 @@ namespace PCCC.Common.Utils
         public const int ERROR_USER_ALREADY_EXIST = 2;
         public const string MESSAGE_USER_ALREADY_EXIST = "Tài khoản đã tồn tại";
         public const int ERROR_USERNAME_ALREADY_EXIST = 3;
-        public const string MESSAGE_USERNAME_ALREADY_EXIST = "Tên đăng nhập đã tồn tại";
+        public const string MESSAGE_USERNAME_ALREADY_EXIST = "UserName đã tồn tại";
 
         public const int ERROR_CHANGE_PASSWORD_WRONG = -1;
         public const string MESSAGE_CHANGE_PASSWORD_WRONG = "Mật khẩu cũ không đúng";
