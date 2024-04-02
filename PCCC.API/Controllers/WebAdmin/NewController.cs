@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Minio;
 using PCCC.Common.DTOs.News;
 using PCCC.Common.Utils;
 using PCCC.Service.Interfaces;
@@ -14,9 +15,11 @@ namespace PCCC.API.Controllers.WebAdmin
     public class NewController : ControllerBase
     {
         public readonly INewService _newService;
-        public NewController(INewService newService)
+        private readonly IMinioClient _minio;
+        public NewController(INewService newService, IMinioClient minio)
         {
             _newService = newService;
+            _minio = minio;
         }
         [HttpGet("GetListNew")]
         //[Authorize]

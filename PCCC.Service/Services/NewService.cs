@@ -85,7 +85,7 @@ namespace PCCC.Service.Services
                 await _newRepository.DeleteAsync(news);
                 return JsonResponse.Success();
             }
-            catch (Exception Ex)
+            catch (Exception Ex) 
             {
                 return JsonResponse.ServerError();
 

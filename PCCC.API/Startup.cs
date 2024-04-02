@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using AutoMapper;
 using PCCCC.Service.Services;
+using Minio;
 
 namespace PCCC
 {
@@ -30,6 +31,15 @@ namespace PCCC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var endpoint = "play.min.io";
+            var accessKey = "Q3AM3UQ867SPQQA43P2F";
+            var secretKey = "zuf+tfteSlswRu7BJ86wtrueekitnifILbZam1KYY3TG";
+            services.AddMinio(accessKey, secretKey);
+
+            // Add Minio using the custom endpoint and configure additional settings for default MinioClient initialization
+            services.AddMinio(configureClient => configureClient
+                .WithEndpoint(endpoint)
+                .WithCredentials(accessKey, secretKey));
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
             services.AddControllers();
