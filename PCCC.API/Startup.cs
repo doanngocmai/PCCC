@@ -31,16 +31,17 @@ namespace PCCC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMinio(Configuration["minio:MINIO_ACCESS_KEY"], Configuration["minio:MINIO_SECRET_KEY"]);
+            var minio = Configuration.GetSection("minio");
+            services.AddMinio(minio["MINIO_ACCESS_KEY"], minio["MINIO_SECRET_KEY"]);
 
             // Add Minio using the custom endpoint and configure additional settings for default MinioClient initialization
             services.AddMinio(configureClient =>
             {
-                configureClient.WithEndpoint(Configuration["minio:MINIO_END_POINT"]);
-                configureClient.WithCredentials(Configuration["minio:MINIO_ACCESS_KEY"], Configuration["minio:MINIO_SECRET_KEY"]);
+                configureClient.WithEndpoint(minio["MINIO_END_POINT"]);
+                configureClient.WithCredentials(minio["MINIO_ACCESS_KEY"], minio["MINIO_SECRET_KEY"]);
                 configureClient.WithSSL();
             });
-            services.AddAutoMapper(typeof(Startup));
+            //services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
             services.AddControllers();
             services.AddCors(options =>
@@ -96,7 +97,7 @@ namespace PCCC
             });
             services.AddDistributedMemoryCache();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+            services.AddSingleton<MinioClient>();
             ConfigureCoreAndRepositoryService(services);
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
