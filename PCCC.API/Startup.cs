@@ -39,7 +39,6 @@ namespace PCCC
             {
                 configureClient.WithEndpoint(minio["MINIO_END_POINT"]);
                 configureClient.WithCredentials(minio["MINIO_ACCESS_KEY"], minio["MINIO_SECRET_KEY"]);
-                configureClient.WithSSL();
             });
             //services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();

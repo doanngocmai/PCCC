@@ -144,6 +144,7 @@ namespace PCCC.Common.Utils
 
         //LevelAdmin
         public const int UserWebAmin = 1;
+        public const int Member = 2;
 
 
         public const string ADMIN = "Admin";

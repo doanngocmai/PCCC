@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Minio;
 using Minio.DataModel.Args;
+using Minio.Exceptions;
 using System.Security.AccessControl;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Net.WebRequestMethods;
 
 namespace PCCC.API.Controllers.WebAdmin
 {
@@ -10,13 +14,35 @@ namespace PCCC.API.Controllers.WebAdmin
     [ApiController]
     public class UploadController : ControllerBase
     {
-        private readonly MinioClient _minioClient;
+        private readonly IMinioClient _minioClient;
+        private readonly IConfiguration _configuration;
 
-        public UploadController(MinioClient minioClient)
+        public UploadController(IMinioClient minioClient, IConfiguration configuration)
         {
-            _minioClient = minioClient;
+            _minioClient = minioClient.WithSSL(false);
+            _configuration = configuration;
         }
+        //Các headerType:
+        //Hình ảnh JPEG: "image/jpeg"
+        //Hình ảnh PNG: "image/png"
+        //Tệp PDF: "application/pdf"
+        //Văn bản thuần(plain text) : "text/plain"
+        //Tệp CSV: "text/csv"
+        //Tệp JSON: "application/json"
+        //Tệp XML: "application/xml"
+        [HttpGet("GetUrl")]
+        public Task<string> GetUrl(string fileName, string headerType)
+        {
+            string APP_BUCKET = _configuration["minio:APP_BUCKET"];
+            var header = new Dictionary<string, string> { { "response-content-type", headerType } };
+            var args = new PresignedGetObjectArgs()
+                .WithBucket(APP_BUCKET)
+                .WithObject(fileName)
+                .WithHeaders(header)
+                .WithExpiry(60 * 60 * 24);
 
+            return _minioClient.PresignedGetObjectAsync(args);
+        }
         [HttpGet]
         [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetUrl(string bucketID)
@@ -25,68 +51,62 @@ namespace PCCC.API.Controllers.WebAdmin
                     .WithBucket(bucketID))
                 .ConfigureAwait(false));
         }
-        //private string APP_BUCKET = "image-pccc";
-        //private async bool CheckAndCreateBucket(string bucketName)
-        //{
-        //    var beArgs = new BucketExistsArgs()
-        //      .WithBucket(bucketName);
-        //    bool found = await _minioClient.BucketExistsAsync(beArgs).ConfigureAwait(false);
-        //    if (!found)
-        //    {
-        //        var mbArgs = new MakeBucketArgs()
-        //            .WithBucket(bucketName);
-        //        await _minioClient.MakeBucketAsync(mbArgs).ConfigureAwait(false);
-        //    }
-        //    return found;
-        //}
-        //public async Task<string> UploadFileToMinio( int objectId, ObjectType type,Stream fileStream,string fileName, string contentType)
-        //{
-        //    await CheckAndCreateBucket(APP_BUCKET) ;
-        //    var folder = type switch
-        //    {
-        //        ObjectType.Asset => "file-asset",
-        //        ObjectType.Request => "file-request",
-        //        ObjectType.HistoryRequest => "file-request-history",
-        //        _ => "file-lungtung"
-        //    };
-        //    folder += "/" + fileName;
-        //    var args = new PutObjectArgs()
-        //        .WithBucket(APP_BUCKET)
-        //        .WithObject(folder)
-        //        .WithStreamData(fileStream)
-        //        .WithObjectSize(fileStream.Length)
-        //        .WithContentType(contentType);
-
-        //    _ = await _minioClient.PutObjectAsync(args);
-        //    return folder;
-        //}
-        [HttpPost]
-        public async Task<IActionResult> UploadFile(IFormFile file, string bucketName)
+        [HttpPost("UploadImage")]
+        public async Task<IActionResult> UploadImage()
         {
-            if (file != null && file.Length > 0)
+            var objectName = "news";
+            var filePath = "D:\\Figma\\image\\logo_nobg.png";
+            var contentType = "application/png";
+            string bucketName = _configuration["minio:APP_BUCKET"];
+            string url = _configuration["minio:MINIO_END_POINT"];
+            // Make a bucket on the server, if not already present.
+            var beArgs = new BucketExistsArgs()
+                .WithBucket(bucketName);
+            bool found = await _minioClient.BucketExistsAsync(beArgs).ConfigureAwait(false);
+            if (!found)
             {
-                var beArgs = new BucketExistsArgs()
-                  .WithBucket(bucketName);
-                bool found = await _minioClient.BucketExistsAsync(beArgs).ConfigureAwait(false);
-                if (!found)
-                {
-                    var mbArgs = new MakeBucketArgs()
-                        .WithBucket(bucketName);
-                    await _minioClient.MakeBucketAsync(mbArgs).ConfigureAwait(false);
-                }
-                string uniqueFileName = Guid.NewGuid().ToString();
-                var arg = new PutObjectArgs().WithBucket(bucketName)
-                    .WithFileName(file.FileName)
-                    .WithObject(uniqueFileName)
-                    .WithContentType(file.ContentType);
-                await _minioClient.PutObjectAsync(arg);
-                // Return appropriate response indicating success or failure
-                return Ok("File uploaded successfully");
+                var mbArgs = new MakeBucketArgs()
+                    .WithBucket(bucketName);
+                await _minioClient.MakeBucketAsync(mbArgs).ConfigureAwait(false);
             }
-            else
+            // Upload a file to bucket.
+            var putObjectArgs = new PutObjectArgs()
+                .WithBucket(bucketName)
+                .WithObject(objectName)
+                .WithFileName(filePath)
+                .WithContentType(contentType);
+            await _minioClient.PutObjectAsync(putObjectArgs).ConfigureAwait(false);
+            return Ok("https:" + bucketName + "." + url + "/" + objectName + "/" + filePath);
+        }
+        private async Task<bool> CheckAndCreateBucket(string bucketName)
+        {
+            var beArgs = new BucketExistsArgs()
+              .WithBucket(bucketName);
+            bool found = await _minioClient.BucketExistsAsync(beArgs).ConfigureAwait(false);
+            if (!found)
             {
-                return BadRequest("No file was uploaded");
+                var mbArgs = new MakeBucketArgs()
+                    .WithBucket(bucketName);
+                await _minioClient.MakeBucketAsync(mbArgs).ConfigureAwait(false);
             }
+            return found;
+        }
+        [HttpPost("UploadFileToMinio")]
+        public async Task<IActionResult> UploadFileToMinio(IFormFile file)
+        {
+            string APP_BUCKET = _configuration["minio:APP_BUCKET"];
+            string filePath = "image-pccc/news";
+            await CheckAndCreateBucket(APP_BUCKET);
+            var folder = filePath + "/" + file.FileName;
+            var args = new PutObjectArgs()
+                .WithBucket(APP_BUCKET)
+                .WithObject(folder)
+                .WithStreamData(file.OpenReadStream())
+                .WithObjectSize(file.Length)
+                .WithContentType(file.ContentType);
+
+            await _minioClient.PutObjectAsync(args);
+            return Ok("http://" + folder);
         }
     }
 }
