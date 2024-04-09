@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Minio;
 using Minio.DataModel.Args;
 using Minio.Exceptions;
+using PCCC.API.MinIOs;
 using System.Security.AccessControl;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Net.WebRequestMethods;
@@ -94,19 +95,38 @@ namespace PCCC.API.Controllers.WebAdmin
         [HttpPost("UploadFileToMinio")]
         public async Task<IActionResult> UploadFileToMinio(IFormFile file)
         {
-            string APP_BUCKET = _configuration["minio:APP_BUCKET"];
-            string filePath = "image-pccc/news";
-            await CheckAndCreateBucket(APP_BUCKET);
-            var folder = filePath + "/" + file.FileName;
-            var args = new PutObjectArgs()
-                .WithBucket(APP_BUCKET)
-                .WithObject(folder)
-                .WithStreamData(file.OpenReadStream())
-                .WithObjectSize(file.Length)
-                .WithContentType(file.ContentType);
+            try
+            {
+                string APP_BUCKET = _configuration["minio:APP_BUCKET"];
+                string filePath = "news";
+                await CheckAndCreateBucket(APP_BUCKET);
+                var folder = filePath + "/" + file.FileName;
+                var ms = new MemoryStream();
+                file.CopyTo(ms);
+                ms.Position = 0;
+                var args = new PutObjectArgs()
+                    .WithBucket(APP_BUCKET)
+                    .WithObject(file.FileName)
+                    .WithStreamData(ms)
+                    .WithObjectSize(file.Length)
+                    .WithContentType(file.ContentType);
+                var a =await _minioClient.PutObjectAsync(args);
+                return Ok("http://" + folder);
 
-            await _minioClient.PutObjectAsync(args);
-            return Ok("http://" + folder);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            
+        }
+        [HttpPost("Test")]
+        public async Task<string> Test(IFormFile file)
+        {
+            var aws = new MinioService();
+            var image = await aws.UploadFile(file, "news");
+            return image;
         }
     }
 }

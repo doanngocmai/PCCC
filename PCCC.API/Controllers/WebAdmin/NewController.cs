@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Minio;
 using Minio.DataModel.Args;
+using PCCC.API.MinIOs;
 using PCCC.Common.DTOs.News;
 using PCCC.Common.Utils;
 using PCCC.Service.Interfaces;
@@ -19,11 +20,9 @@ namespace PCCC.API.Controllers.WebAdmin
     public class NewController : ControllerBase
     {
         public readonly INewService _newService;
-        private readonly IMinioClient _minio;
-        public NewController(INewService newService, IMinioClient minio)
+        public NewController(INewService newService)
         {
             _newService = newService;
-            _minio = minio;
         }
         [HttpGet("GetListNew")]
         //[Authorize]
@@ -33,39 +32,12 @@ namespace PCCC.API.Controllers.WebAdmin
         }
         //[Authorize]
         [HttpPost("CreateNew")]
-        public async Task<JsonResultModel> CreateNew(CreateNewModel model)
+        public async Task<JsonResultModel> CreateNew(IFormFile file, CreateNewModel model)
         {
-            // Kiểm tra và upload ảnh lên Minio nếu có
-            //if (model.Image != null)
-            //{
-            //    // Tên bucket để lưu trữ ảnh
-            //    string bucketName = "news";
-            //    var beArgs = new BucketExistsArgs()
-            //       .WithBucket(bucketName);
-
-            //    bool found = await _minio.BucketExistsAsync(beArgs).ConfigureAwait(false);
-            //    if (!found)
-            //    {
-            //        var mbArgs = new MakeBucketArgs()
-            //            .WithBucket(bucketName);
-            //        await _minio.MakeBucketAsync(mbArgs).ConfigureAwait(false);
-            //    }
-            //    // Upload a file to bucket.
-            //    var putObjectArgs = new PutObjectArgs()
-            //    .WithBucket(bucketName)
-            //        .WithFileName(model.Image);
-            //    await _minio.PutObjectAsync(putObjectArgs).ConfigureAwait(false);
-            //    Console.WriteLine("Successfully uploaded ");
-            //    // Tạo một tên duy nhất cho ảnh
-            //    string objectName = Guid.NewGuid().ToString();
-            //    // Lưu lại đường dẫn ảnh trong model hoặc làm gì đó khác với đường dẫn ảnh
-            //    string imageUrl = $"https://{bucketName}/{objectName}";
-            //    model.Image = imageUrl; // Gán đường dẫn ảnh vào thuộc tính Image của model
-            //}
-
-            // Gọi service để xử lý logic và trả về kết quả
-            return await _newService.CreateNew(model);
-        }
+            var aws = new MinioService();
+            var imageUrl = await aws.UploadFile(file, "news");
+            return await _newService.CreateNew(model, imageUrl);
+        } 
 
         [HttpPost("UpdateNew")]
         //[Authorize]

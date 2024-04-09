@@ -1,66 +1,79 @@
-﻿using Minio.DataModel.Args;
-using Minio;
-using PCCC.Repository.Interfaces;
+﻿using Amazon.S3;
+using Amazon;
+using Amazon.S3.Transfer;
 
 namespace PCCC.API.MinIOs
 {
     public class MinioService
     {
-        private readonly IMinioClient _minioClient;
-        private readonly IConfiguration _configuration;
+        private readonly string bucketName = "image-pccc";
+        private readonly string awsAccessKeyId = "lsvk2QV4AMgz5yBN5LgR";
+        private readonly string awsSecretAccessKey = "KMj6SPihl6mQMi5EHVs3pwgk3u2UqEJZq16j0YXP";
 
-        public MinioService(IMinioClient minioClient, IConfiguration configuration)
+        public async Task<string> UploadFile(IFormFile file, string folder)
         {
-            _minioClient = minioClient.WithSSL(false);
-            _configuration = configuration;
-        }
-
-        public Task<string> GetUrl(string fileName, string headerType)
-        {
-            string APP_BUCKET = _configuration["minio:APP_BUCKET"];
-            var header = new Dictionary<string, string> { { "response-content-type", headerType } };
-            var args = new PresignedGetObjectArgs()
-                .WithBucket(APP_BUCKET)
-                .WithObject(fileName)
-                .WithHeaders(header)
-                .WithExpiry(60 * 60 * 24);
-
-            return _minioClient.PresignedGetObjectAsync(args);
-        }
-        private async Task<bool> CheckAndCreateBucket(string bucketName)
-        {
-            var beArgs = new BucketExistsArgs()
-              .WithBucket(bucketName);
-            bool found = await _minioClient.BucketExistsAsync(beArgs).ConfigureAwait(false);
-            if (!found)
+            try
             {
-                var mbArgs = new MakeBucketArgs()
-                    .WithBucket(bucketName);
-                await _minioClient.MakeBucketAsync(mbArgs).ConfigureAwait(false);
-            }
-            return found;
-        }
-        public async Task<string> UploadFileToMinio(IFormFile file, Stream fileStream, string folderName)
-        {
-            string APP_BUCKET = _configuration["minio:APP_BUCKET"];
-            await CheckAndCreateBucket(APP_BUCKET);
-            //var folder = type switch
-            //{
-            //    ObjectType.Asset => "file-asset",
-            //    ObjectType.Request => "file-request",
-            //    ObjectType.HistoryRequest => "file-request-history",
-            //    _ => "file-lungt ung"
-            //};
-            var folder = folderName +  "/" + file.FileName;
-            var args = new PutObjectArgs()
-                .WithBucket(APP_BUCKET)
-                .WithObject(folder)
-                .WithStreamData(fileStream)
-                .WithObjectSize(fileStream.Length)
-                .WithContentType(file.ContentType);
+                var ext = Path.GetExtension(file.FileName);
+                var fileName = Guid.NewGuid().ToString().Replace("-", "") + ext;
+                var checkFile = CheckImage(ext);
+                if (checkFile)
+                {
+                    var config = new AmazonS3Config
+                    {
+                        RegionEndpoint = RegionEndpoint.USEast1, // MUST set this before setting ServiceURL and it should match the `MINIO_REGION` enviroment variable.
+                        ServiceURL = "http://192.168.1.15:9000", // replace http://localhost:9000 with URL of your MinIO server
+                        ForcePathStyle = true // MUST be true to work correctly with MinIO server
+                    };
+                    using (var client = new AmazonS3Client(awsAccessKeyId, awsSecretAccessKey, config))
+                    {
+                        using (var newMemoryStream = new MemoryStream())
+                        {
+                            file.CopyTo(newMemoryStream);
 
-            _ = await _minioClient.PutObjectAsync(args);
-            return folder;
+                            var uploadRequest = new TransferUtilityUploadRequest
+                            {
+                                InputStream = newMemoryStream,
+                                Key = folder + "/" + fileName,
+                                BucketName = bucketName,
+                                ContentType = file.ContentType
+                            };
+
+                            var fileTransferUtility = new TransferUtility(client);
+                            await fileTransferUtility.UploadAsync(uploadRequest);
+                        }
+                    }
+                    return "http://192.168.1.15:9000" + bucketName + "/" + folder + "/" + fileName;
+                }
+                return "inValid";
+            }
+            catch (AmazonS3Exception amazonS3Exception)
+            {
+                if (amazonS3Exception.ErrorCode != null &&
+                    (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId")
+                    ||
+                    amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
+                {
+                    throw new Exception("Check the provided AWS Credentials.");
+                }
+                else
+                {
+                    throw new Exception("Error occurred: " + amazonS3Exception.Message);
+                }
+            }
+        }
+        public bool CheckImage(string ext)
+        {
+            var lstExt = new List<string>()
+            {
+                ".bmp", ".emf", ".wmf", ".gif", ".jpeg", ".jpg", ".png", ".tiff", ".exif", ".ico"
+            };
+            bool isValid = true;
+            if (!lstExt.Contains(ext.ToLower()))
+            {
+                isValid = false;
+            }
+            return isValid;
         }
     }
 }

@@ -15,8 +15,7 @@ namespace PCCC.Common.DTOs.News
 
         public string Content { get; set; } = null!;
 
-        public string? Image { get; set; }
-
         public bool IsActive { get; set; }
+
     }
 }

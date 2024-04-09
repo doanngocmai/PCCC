@@ -14,7 +14,7 @@ namespace PCCC.Service.Interfaces
     public interface INewService : IServices<News>
     {
 
-        Task<JsonResultModel> CreateNew(CreateNewModel model);
+        Task<JsonResultModel> CreateNew(CreateNewModel model, string? imageUrl);
         Task<JsonResultModel> UpdateNew(UpdateNewModel model);
         Task<JsonResultModel> DeleteNew(int ID);
         Task<JsonResultModel> GetListNew(NewSearchPageResults param);
