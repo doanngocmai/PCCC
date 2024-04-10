@@ -32,10 +32,10 @@ namespace PCCC.API.Controllers.WebAdmin
         }
         //[Authorize]
         [HttpPost("CreateNew")]
-        public async Task<JsonResultModel> CreateNew(IFormFile file, CreateNewModel model)
+        public async Task<JsonResultModel> CreateNew([FromForm] CreateNewModel model)
         {
             var aws = new MinioService();
-            var imageUrl = await aws.UploadFile(file, "news");
+            var imageUrl = await aws.UploadFile(model.ImageFile, "news");
             return await _newService.CreateNew(model, imageUrl);
         } 
 

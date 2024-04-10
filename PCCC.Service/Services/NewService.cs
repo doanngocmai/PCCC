@@ -55,7 +55,7 @@ namespace PCCC.Service.Services
                 news.CreationTime = DateTime.Now;
                 await _newRepository.AddAsync(news);
                 return JsonResponse.Success();
-            }
+            } 
             catch (Exception ex)
             {
                 return JsonResponse.ServerError();

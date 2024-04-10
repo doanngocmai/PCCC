@@ -1,6 +1,9 @@
 ﻿using Amazon.S3;
 using Amazon;
 using Amazon.S3.Transfer;
+using Minio.DataModel.Args;
+using Minio;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace PCCC.API.MinIOs
 {
@@ -9,7 +12,7 @@ namespace PCCC.API.MinIOs
         private readonly string bucketName = "image-pccc";
         private readonly string awsAccessKeyId = "lsvk2QV4AMgz5yBN5LgR";
         private readonly string awsSecretAccessKey = "KMj6SPihl6mQMi5EHVs3pwgk3u2UqEJZq16j0YXP";
-
+        private readonly string minioUrl = "http://192.168.1.15:9001/api/v1/buckets/";
         public async Task<string> UploadFile(IFormFile file, string folder)
         {
             try
@@ -43,7 +46,9 @@ namespace PCCC.API.MinIOs
                             await fileTransferUtility.UploadAsync(uploadRequest);
                         }
                     }
-                    return "http://192.168.1.15:9000" + bucketName + "/" + folder + "/" + fileName;
+
+                    var objectUrl = $"{minioUrl}/{bucketName}/{folder}/{fileName}";
+                    return objectUrl;
                 }
                 return "inValid";
             }
@@ -75,5 +80,6 @@ namespace PCCC.API.MinIOs
             }
             return isValid;
         }
+
     }
 }
