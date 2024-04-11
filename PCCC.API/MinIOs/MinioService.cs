@@ -80,6 +80,22 @@ namespace PCCC.API.MinIOs
             }
             return isValid;
         }
+        private async static Task createURL(MinioClient minio, string bucketName, string objectName, int expirationTime)
+        {
+
+            var reqParams = new Dictionary<string, string>(StringComparer.Ordinal)
+        { { "response-content-type", "image/jpeg" } };
+
+            PresignedGetObjectArgs args = new PresignedGetObjectArgs()
+                .WithBucket(bucketName)
+                .WithObject(objectName)
+                .WithHeaders(reqParams)
+                .WithExpiry(expirationTime);
+
+            string url = await minio.PresignedGetObjectAsync(args);
+
+            Console.WriteLine(url);
+        }
 
     }
 }
