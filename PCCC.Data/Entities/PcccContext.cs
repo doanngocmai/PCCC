@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace PCCC.API.Entities;
+namespace PCCC.Data.Entities;
 
 public partial class PcccContext : DbContext
 {
@@ -32,8 +32,6 @@ public partial class PcccContext : DbContext
     public virtual DbSet<Permission> Permissions { get; set; }
 
     public virtual DbSet<PointArea> PointAreas { get; set; }
-
-    public virtual DbSet<PremiumAccUser> PremiumAccUsers { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
 
@@ -106,7 +104,6 @@ public partial class PcccContext : DbContext
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("ID");
             entity.Property(e => e.Color).HasColumnType("character varying");
-            entity.Property(e => e.Content1).HasColumnName("Content");
             entity.Property(e => e.Icon).HasColumnType("character varying");
             entity.Property(e => e.Image).HasColumnType("character varying");
             entity.Property(e => e.Link).HasColumnType("character varying");
@@ -157,17 +154,6 @@ public partial class PcccContext : DbContext
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("ID");
-        });
-
-        modelBuilder.Entity<PremiumAccUser>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PremiumAccUsers_pkey");
-
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("ID");
-            entity.Property(e => e.AdsId).HasColumnName("AdsID");
-            entity.Property(e => e.UserId).HasColumnName("UserID");
         });
 
         modelBuilder.Entity<Role>(entity =>
