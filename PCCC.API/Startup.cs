@@ -159,7 +159,9 @@ namespace PCCC
             services.AddScoped<INewRepository, NewRepository>();
             services.AddScoped<INewService, NewService>();        
             services.AddScoped<IBuildingRepository, BuildingRepository>();
-            services.AddScoped<IBuildingService, BuildingService>();
+            services.AddScoped<IBuildingService, BuildingService>();    
+            services.AddScoped<IUpgradeAccRepository, UpgradeAccRepository>();
+            services.AddScoped<IUpgradeAccService, UpgradeAccService>();
 
             // Add Mapter Singler 
             var mp = new MapperConfiguration((MapperContext) => MapperContext.AddProfile(new MappingProfile()));

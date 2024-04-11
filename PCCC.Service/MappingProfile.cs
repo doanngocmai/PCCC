@@ -3,6 +3,7 @@ using PCCC.Common.DTOs.Buildings;
 using PCCC.Common.DTOs.Contents;
 using PCCC.Common.DTOs.News;
 using PCCC.Common.DTOs.Roles;
+using PCCC.Common.DTOs.UpgradeAccs;
 using PCCC.Common.DTOs.Users;
 using PCCC.Data.Entities;
 
@@ -26,7 +27,9 @@ namespace PCCC.Service
             CreateMap<News, CreateNewModel>();
             CreateMap<News, UpdateNewModel>();            
             CreateMap<Building, CreateBuildingModel>();
-            CreateMap<Building, UpdateBuildingModel>();
+            CreateMap<Building, UpdateBuildingModel>();  
+            CreateMap<UpgradeAccount, CreateUpgradeAccModel>();
+            CreateMap<UpgradeAccount, UpdateUpgradeAccModel>();
         }
 
         private void MappingViewModelToEntity()
@@ -42,7 +45,9 @@ namespace PCCC.Service
             CreateMap<CreateNewModel, News>();
             CreateMap<UpdateNewModel, News>();           
             CreateMap<CreateBuildingModel, Building>();
-            CreateMap<UpdateBuildingModel, Building >();
+            CreateMap<UpdateBuildingModel, Building >(); 
+            CreateMap<CreateUpgradeAccModel, UpgradeAccount>();
+            CreateMap<UpdateUpgradeAccModel, UpgradeAccount>();
         }
     }
 }
