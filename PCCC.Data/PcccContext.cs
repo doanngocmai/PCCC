@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using PCCC.Data.Entities;
 
-namespace PCCC.Data;
+namespace PCCC.Data.Entities;
 
 public partial class PcccContext : DbContext
 {
@@ -15,6 +14,8 @@ public partial class PcccContext : DbContext
         : base(options)
     {
     }
+
+    public virtual DbSet<AdsUser> AdsUsers { get; set; }
 
     public virtual DbSet<Advertisement> Advertisements { get; set; }
 
@@ -34,8 +35,6 @@ public partial class PcccContext : DbContext
 
     public virtual DbSet<PointArea> PointAreas { get; set; }
 
-    public virtual DbSet<PremiumAccUser> PremiumAccUsers { get; set; }
-
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<StatusContact> StatusContacts { get; set; }
@@ -48,6 +47,17 @@ public partial class PcccContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AdsUser>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PremiumAccUsers_pkey");
+
+            entity.Property(e => e.Id)
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("ID");
+            entity.Property(e => e.AdsId).HasColumnName("AdsID");
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+        });
+
         modelBuilder.Entity<Advertisement>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("Advertisements_pkey");
@@ -55,7 +65,6 @@ public partial class PcccContext : DbContext
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("ID");
-            entity.Property(e => e.IsActive).HasColumnType("bit(1)");
             entity.Property(e => e.Name).HasMaxLength(256);
         });
 
@@ -153,17 +162,6 @@ public partial class PcccContext : DbContext
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("ID");
-        });
-
-        modelBuilder.Entity<PremiumAccUser>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PremiumAccUsers_pkey");
-
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("ID");
-            entity.Property(e => e.AdsId).HasColumnName("AdsID");
-            entity.Property(e => e.UserId).HasColumnName("UserID");
         });
 
         modelBuilder.Entity<Role>(entity =>
