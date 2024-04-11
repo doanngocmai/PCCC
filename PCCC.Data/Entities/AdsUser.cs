@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PCCC.Data.Entities;
 
-public partial class PremiumAccUser
+public partial class AdsUser
 {
     public int Id { get; set; }
 
