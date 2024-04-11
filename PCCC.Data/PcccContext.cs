@@ -34,7 +34,6 @@ public partial class PcccContext : DbContext
 
     public virtual DbSet<PointArea> PointAreas { get; set; }
 
-    public virtual DbSet<PremiumAccUser> PremiumAccUsers { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
 
@@ -153,17 +152,6 @@ public partial class PcccContext : DbContext
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("ID");
-        });
-
-        modelBuilder.Entity<PremiumAccUser>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PremiumAccUsers_pkey");
-
-            entity.Property(e => e.Id)
-                .UseIdentityAlwaysColumn()
-                .HasColumnName("ID");
-            entity.Property(e => e.AdsId).HasColumnName("AdsID");
-            entity.Property(e => e.UserId).HasColumnName("UserID");
         });
 
         modelBuilder.Entity<Role>(entity =>
