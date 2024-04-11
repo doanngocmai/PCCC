@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace PCCC.Data.Entities;
@@ -19,7 +20,7 @@ public partial class Advertisement
 
     public DateTime EndTime { get; set; }
 
-    public DateTime CreationTime { get; set; }
+    public BitArray IsActive { get; set; } = null!;
 
-    public bool IsActive { get; set; }
+    public DateTime CreationTime { get; set; }
 }
