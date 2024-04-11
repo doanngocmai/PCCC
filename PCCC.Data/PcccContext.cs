@@ -65,7 +65,6 @@ public partial class PcccContext : DbContext
             entity.Property(e => e.Id)
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("ID");
-            entity.Property(e => e.IsActive).HasColumnType("bit(1)");
             entity.Property(e => e.Name).HasMaxLength(256);
         });
 
