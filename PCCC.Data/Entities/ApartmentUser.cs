@@ -17,7 +17,7 @@ public partial class ApartmentUser
 
     public DateTime CreationTime { get; set; }
 
-    public int AreaId { get; set; }
+    public int? AreaId { get; set; }
 
-    public int MapId { get; set; }
+    public int? MapId { get; set; }
 }

@@ -27,9 +27,9 @@ public partial class Map
 
     public int FloorNumber { get; set; }
 
-    public int AreaId { get; set; }
+    public int? AreaId { get; set; }
 
-    public int BuiildingId { get; set; }
+    public int? BuiildingId { get; set; }
 
     public bool IsActive { get; set; }
 }
