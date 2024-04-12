@@ -11,10 +11,10 @@ namespace PCCC.API.Controllers.WebAdmin
     [ApiExplorerSettings(GroupName = "WebAdmin")]
     [ApiController]
     [SwaggerTag("Advertising")]
-    public class AdvertisingController : ControllerBase
+    public class ApartmentUserController : ControllerBase
     {
         public readonly IContentService _contentService;
-        public AdvertisingController(IContentService contentService)
+        public ApartmentUserController (IContentService contentService)
         {
             _contentService = contentService;
         }

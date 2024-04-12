@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PCCC.Common.DTOs.Ads
 {
-    public class AdsModel
+    public class UpdateAdsModel
     {
         public int Id { get; set; }
 
@@ -21,8 +21,6 @@ namespace PCCC.Common.DTOs.Ads
         public DateTime StartTime { get; set; }
 
         public DateTime EndTime { get; set; }
-
-        public DateTime CreationTime { get; set; }
 
         public bool IsActive { get; set; }
     }

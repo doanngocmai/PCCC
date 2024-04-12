@@ -4,11 +4,14 @@ using PCCC.Common.DTOs.Roles;
 using PCCC.Common.DTOs.UpgradeAccs;
 using PCCC.Common.Utils;
 using PCCC.Service.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace PCCC.API.Controllers.WebAdmin
 {
-    [Route("api/[controller]")]
+    [Route("api/web/[controller]")]
+    [ApiExplorerSettings(GroupName = "WebAdmin")]
     [ApiController]
+    [SwaggerTag("UpgradeAccount")]
     public class UpgradeAccountController : ControllerBase
     {
         public readonly IUpgradeAccService _upgradeAccService;
