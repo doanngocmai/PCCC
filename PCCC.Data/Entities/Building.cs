@@ -20,4 +20,8 @@ public partial class Building
     public float? Latitude { get; set; }
 
     public float? Longitude { get; set; }
+
+    public bool? IsActive { get; set; }
+
+    public string? Note { get; set; }
 }
