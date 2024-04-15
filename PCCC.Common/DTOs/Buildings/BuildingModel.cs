@@ -19,5 +19,8 @@ namespace PCCC.Common.DTOs.Buildings
         public DateTime CreationTime { get; set; }
 
         public int Id { get; set; }
+        public bool? IsActive { get; set; }
+
+        public string? Note { get; set; }
     }
 }
