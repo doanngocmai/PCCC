@@ -36,7 +36,7 @@ namespace PCCC.Repository
                                      Note = u.Note,
                                      IsActive = u.IsActive,
                                      CreationTime = u.CreationTime,
-
+                                      
                                  }).AsQueryable().ToPagedList(param.page, param.perPage);
                     return model;
                 });

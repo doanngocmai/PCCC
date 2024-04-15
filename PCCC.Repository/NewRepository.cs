@@ -22,8 +22,6 @@ namespace PCCC.Repository
             {
                 return await Task.Run(() =>
                 {
-                    var fd = Util.ConvertFromDate(param.fromDate);
-                    var td = Util.ConvertToDate(param.toDate);
                 var model = (from u in DbContext.News
                              where (!string.IsNullOrEmpty(param.SearchKey) ? u.Title.Contains(param.SearchKey) : true && param.IsActive.HasValue ? u.IsActive == param.IsActive : true)
                                  select new NewModel

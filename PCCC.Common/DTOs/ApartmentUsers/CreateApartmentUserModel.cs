@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace PCCC.Common.DTOs.ApartmentUsers
 {
-    public class ApartmentUserModel
+    public class CreateApartmentUserModel
     {
-        public int Id { get; set; }
-
         public string Address { get; set; } = null!;
 
         public int BuildingId { get; set; }
@@ -17,8 +15,6 @@ namespace PCCC.Common.DTOs.ApartmentUsers
         public float? Longitude { get; set; }
 
         public float? Latitude { get; set; }
-
-        public DateTime CreationTime { get; set; }
 
         public int? AreaId { get; set; }
 

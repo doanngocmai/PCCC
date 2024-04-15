@@ -22,8 +22,6 @@ namespace PCCC.Repository
             {
                 return await Task.Run(() =>
                 {
-                    var fd = Util.ConvertFromDate(param.fromDate);
-                    var td = Util.ConvertToDate(param.toDate);
                     var model = (from u in DbContext.Users
                                  where (u.IsDelete && u.Level == PCCCConsts.Member && !string.IsNullOrEmpty(param.SearchKey) ? (u.UserName.Contains(param.SearchKey) || u.Phone.Contains(param.SearchKey)) : true)
                                  && (param.IsActive.HasValue ? u.IsActive == param.IsActive : true)

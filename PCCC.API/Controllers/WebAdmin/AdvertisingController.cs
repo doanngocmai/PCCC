@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PCCC.Common.DTOs.Ads;
 using PCCC.Common.DTOs.Contents;
 using PCCC.Common.Utils;
 using PCCC.Service.Interfaces;
@@ -13,34 +14,34 @@ namespace PCCC.API.Controllers.WebAdmin
     [SwaggerTag("Advertising")]
     public class AdvertisingController : ControllerBase
     {
-        public readonly IContentService _contentService;
-        public AdvertisingController(IContentService contentService)
+        public readonly IAdvertisingService _advertisingService;
+        public AdvertisingController(IAdvertisingService advertisingService)
         {
-            _contentService = contentService;
+            _advertisingService = advertisingService;
         }
         [HttpGet("GetListContent")]
         //[Authorize]
-        public async Task<JsonResultModel> GetListContent([FromQuery] ContentSearchPageResults param)
+        public async Task<JsonResultModel> GetListContent([FromQuery] AdsSearchPageResults param)
         {
-            return await _contentService.GetListContent(param);
+            return await _advertisingService.GetListAds(param);
         }
         //[Authorize]
-        [HttpPost("CreateContent")]
-        public async Task<JsonResultModel> CreateContent(CreateContentModel model)
+        [HttpPost("CreateAds")]
+        public async Task<JsonResultModel> CreateAds(CreateAdsModel model)
         {
-            return await _contentService.CreateContent(model);
+            return await _advertisingService.CreateAds(model);
         }
-        [HttpPost("UpdateContent")]
+        [HttpPost("UpdateAds")]
         //[Authorize]
-        public async Task<JsonResultModel> UpdateContent(UpdateContentModel input)
+        public async Task<JsonResultModel> CreateAds(UpdateAdsModel input)
         {
-            return await _contentService.UpdateContent(input);
+            return await _advertisingService.UpdateAds(input);
         }
-        [HttpDelete("DeleteContent/{ID}")]
+        [HttpDelete("DeleteAds/{ID}")]
         //[Authorize]
-        public async Task<JsonResultModel> DeleteContent(int ID)
+        public async Task<JsonResultModel> DeleteAds(int ID)
         {
-            return await _contentService.DeleteContent(ID);
+            return await _advertisingService.DeleteAds(ID);
         }
     }
 }

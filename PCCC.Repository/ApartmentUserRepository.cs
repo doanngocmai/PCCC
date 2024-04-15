@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PagedList.Core;
-using PCCC.Common.DTOs.Buildings;
+using PCCC.Common.DTOs.Ads;
+using PCCC.Common.DTOs.ApartmentUsers;
 using PCCC.Common.DTOs.Contents;
 using PCCC.Common.Utils;
 using PCCC.Data;
@@ -10,29 +11,30 @@ using PCCC.Repository.Interfaces;
 
 namespace PCCC.Repository
 {
-    public class BuildingRepository : BaseRepository<Building>, IBuildingRepository
+    public class ApartmentUserRepository : BaseRepository<ApartmentUser>, IApartmentUserRepository
     {
-        public BuildingRepository(PcccContext dbContext) : base(dbContext)
+        public ApartmentUserRepository(PcccContext dbContext) : base(dbContext)
         {
 
         }
 
-        public async Task<IPagedList<BuildingModel>> GetBuildings(BuildingSearchPageResults param)
+        public async Task<IPagedList<ApartmentUserModel>> GetApartmentUsers(ApartmentUserSearchPageResults param)
         {
             try
             {
                 return await Task.Run(() =>
                 {
-                var model = (from u in DbContext.Buildings
-                             where (!string.IsNullOrEmpty(param.SearchKey) ? u.Name.Contains(param.SearchKey) : true)
-                                 select new BuildingModel
+                var model = (from u in DbContext.ApartmentUsers
+                                 select new ApartmentUserModel
                                  {
                                      Id = u.Id,
-                                     Name = u.Name,
                                      Address = u.Address,
-                                     ApartmentUserId = u.ApartmentUserId,
-                                     FloorCount = u.FloorCount,
-                                     Image = u.Image,
+                                     AreaId = u.AreaId,
+                                     BuildingId = u.BuildingId,
+                                     FloorNumber = u.FloorNumber,
+                                     Latitude = u.Latitude,
+                                     Longitude = u.Longitude,
+                                     MapId = u.MapId,
                                      CreationTime = u.CreationTime,
                                  }).AsQueryable().ToPagedList(param.page, param.perPage);
                     return model;
