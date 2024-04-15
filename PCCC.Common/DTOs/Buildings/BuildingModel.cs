@@ -16,7 +16,7 @@ namespace PCCC.Common.DTOs.Buildings
 
         public string? Image { get; set; }
 
-        public int ApartmentUserId { get; set; }
+        public int? ApartmentUserId { get; set; }
 
         public DateTime CreationTime { get; set; }
 
