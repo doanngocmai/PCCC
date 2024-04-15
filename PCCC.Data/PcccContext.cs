@@ -77,8 +77,9 @@ public partial class PcccContext : DbContext
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("ID");
             entity.Property(e => e.Address).HasMaxLength(256);
-            entity.Property(e => e.ApartmentId).HasColumnName("ApartmentID");
             entity.Property(e => e.AreaId).HasColumnName("AreaID");
+            entity.Property(e => e.BuildingId).HasColumnName("BuildingID");
+            entity.Property(e => e.FloorNumber).HasColumnType("character varying");
             entity.Property(e => e.MapId).HasColumnName("MapID");
         });
 
@@ -129,6 +130,7 @@ public partial class PcccContext : DbContext
             entity.Property(e => e.AreaId).HasColumnName("AreaID");
             entity.Property(e => e.BuiildingId).HasColumnName("BuiildingID");
             entity.Property(e => e.DisplayName).HasMaxLength(256);
+            entity.Property(e => e.FloorNumber).HasColumnType("character varying");
             entity.Property(e => e.Image).HasColumnType("character varying");
             entity.Property(e => e.Name).HasMaxLength(256);
         });
