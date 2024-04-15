@@ -42,6 +42,7 @@ namespace PCCC.Service.Services
                 return JsonResponse.ServerError();
             }
         }
+
         public async Task<JsonResultModel> CreateBuilding(CreateBuildingModel model)
         {
             try
@@ -56,6 +57,21 @@ namespace PCCC.Service.Services
                 return JsonResponse.ServerError();
             }
         }
+        public async Task<JsonResultModel> GetBuildingById(int ID)
+        {
+            try
+            {
+                var building = await _buildingRepository.GetFirstOrDefaultAsync(x => x.Id.Equals(ID));
+                var data = );_mapper.Map<BuildingModel>(building
+                return JsonResponse.Success(data);
+            }
+            catch (Exception Ex)
+            {
+                return JsonResponse.ServerError();
+
+            }
+        }
+
         public async Task<JsonResultModel> UpdateBuilding(UpdateBuildingModel model)
         {
             try

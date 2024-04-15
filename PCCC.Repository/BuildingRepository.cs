@@ -32,6 +32,8 @@ namespace PCCC.Repository
                                      Address = u.Address,
                                      FloorCount = u.FloorCount,
                                      Image = u.Image,
+                                     IsActive = u.IsActive,
+                                     Note= u.Note,
                                      CreationTime = u.CreationTime,
                                  }).AsQueryable().ToPagedList(param.page, param.perPage);
                     return model;

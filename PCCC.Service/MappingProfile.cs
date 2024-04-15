@@ -26,6 +26,7 @@ namespace PCCC.Service
             CreateMap<Content, UpdateContentModel>();
             CreateMap<News, CreateNewModel>();
             CreateMap<News, UpdateNewModel>();            
+            CreateMap<Building, BuildingModel>();
             CreateMap<Building, CreateBuildingModel>();
             CreateMap<Building, UpdateBuildingModel>();  
             CreateMap<UpgradeAccount, CreateUpgradeAccModel>();
@@ -44,6 +45,7 @@ namespace PCCC.Service
             CreateMap<UpdateContentModel, Content>();
             CreateMap<CreateNewModel, News>();
             CreateMap<UpdateNewModel, News>();           
+            CreateMap<BuildingModel, Building>();
             CreateMap<CreateBuildingModel, Building>();
             CreateMap<UpdateBuildingModel, Building >(); 
             CreateMap<CreateUpgradeAccModel, UpgradeAccount>();

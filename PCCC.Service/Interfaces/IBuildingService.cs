@@ -17,6 +17,7 @@ namespace PCCC.Service.Interfaces
         Task<JsonResultModel> CreateBuilding(CreateBuildingModel model);
         Task<JsonResultModel> UpdateBuilding(UpdateBuildingModel model);
         Task<JsonResultModel> DeleteBuilding(int ID);
+        Task<JsonResultModel> GetBuildingById(int ID);
         Task<JsonResultModel> GetListBuilding(BuildingSearchPageResults param);
     }
 }
