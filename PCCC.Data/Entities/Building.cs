@@ -13,8 +13,6 @@ public partial class Building
 
     public string? Image { get; set; }
 
-    public int? ApartmentUserId { get; set; }
-
     public DateTime CreationTime { get; set; }
 
     public int Id { get; set; }

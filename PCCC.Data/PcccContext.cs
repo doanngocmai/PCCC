@@ -101,7 +101,6 @@ public partial class PcccContext : DbContext
 
             entity.Property(e => e.Id).UseIdentityAlwaysColumn();
             entity.Property(e => e.Address).HasColumnType("character varying");
-            entity.Property(e => e.ApartmentUserId).HasColumnName("ApartmentUserID");
             entity.Property(e => e.Image).HasColumnType("character varying");
             entity.Property(e => e.Name).HasColumnType("character varying");
         });
@@ -237,6 +236,5 @@ public partial class PcccContext : DbContext
 
         OnModelCreatingPartial(modelBuilder);
     }
-
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
