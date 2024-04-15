@@ -30,7 +30,6 @@ namespace PCCC.Repository
                                      Id = u.Id,
                                      Name = u.Name,
                                      Address = u.Address,
-                                     ApartmentUserId = u.ApartmentUserId,
                                      FloorCount = u.FloorCount,
                                      Image = u.Image,
                                      CreationTime = u.CreationTime,

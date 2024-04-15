@@ -15,7 +15,5 @@ namespace PCCC.Common.DTOs.Buildings
         public int FloorCount { get; set; }
 
         public string? Image { get; set; }
-        public int? ApartmentUserId { get; set; }
-
     }
 }
