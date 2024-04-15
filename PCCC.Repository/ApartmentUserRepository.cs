@@ -32,8 +32,6 @@ namespace PCCC.Repository
                                      AreaId = u.AreaId,
                                      BuildingId = u.BuildingId,
                                      FloorNumber = u.FloorNumber,
-                                     Latitude = u.Latitude,
-                                     Longitude = u.Longitude,
                                      MapId = u.MapId,
                                      CreationTime = u.CreationTime,
                                  }).AsQueryable().ToPagedList(param.page, param.perPage);

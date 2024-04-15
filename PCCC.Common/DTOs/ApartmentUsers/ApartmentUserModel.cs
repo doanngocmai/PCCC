@@ -14,10 +14,6 @@ namespace PCCC.Common.DTOs.ApartmentUsers
 
         public int BuildingId { get; set; }
 
-        public float? Longitude { get; set; }
-
-        public float? Latitude { get; set; }
-
         public DateTime CreationTime { get; set; }
 
         public int? AreaId { get; set; }
