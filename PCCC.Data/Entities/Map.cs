@@ -25,11 +25,11 @@ public partial class Map
 
     public DateTime CreationTime { get; set; }
 
-    public int FloorNumber { get; set; }
-
     public int? AreaId { get; set; }
 
     public int? BuiildingId { get; set; }
 
     public bool IsActive { get; set; }
+
+    public string FloorNumber { get; set; } = null!;
 }

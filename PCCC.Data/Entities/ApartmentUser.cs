@@ -9,7 +9,7 @@ public partial class ApartmentUser
 
     public string Address { get; set; } = null!;
 
-    public int ApartmentId { get; set; }
+    public int BuildingId { get; set; }
 
     public float? Longitude { get; set; }
 
@@ -20,4 +20,6 @@ public partial class ApartmentUser
     public int? AreaId { get; set; }
 
     public int? MapId { get; set; }
+
+    public string FloorNumber { get; set; } = null!;
 }
