@@ -62,7 +62,7 @@ namespace PCCC.Service.Services
             try
             {
                 var building = await _buildingRepository.GetFirstOrDefaultAsync(x => x.Id.Equals(ID));
-                var data = );_mapper.Map<BuildingModel>(building
+                var data = _mapper.Map<BuildingModel>(building);
                 return JsonResponse.Success(data);
             }
             catch (Exception Ex)
