@@ -57,11 +57,11 @@ namespace PCCC.Service.Services
                 return JsonResponse.ServerError();
             }
         }
-        public async Task<JsonResultModel> GetBuildingById(int ID)
+        public async Task<JsonResultModel> GetBuildingById(int Id)
         {
             try
             {
-                var building = await _buildingRepository.GetFirstOrDefaultAsync(x => x.Id.Equals(ID));
+                var building = await _buildingRepository.GetFirstOrDefaultAsync(x => x.Id.Equals(Id));
                 var data = _mapper.Map<BuildingModel>(building);
                 return JsonResponse.Success(data);
             }
@@ -87,11 +87,11 @@ namespace PCCC.Service.Services
                 return JsonResponse.ServerError();
             }
         }
-        public async Task<JsonResultModel> DeleteBuilding(int ID)
+        public async Task<JsonResultModel> DeleteBuilding(int Id)
         {
             try
             {
-                var building = await _buildingRepository.GetFirstOrDefaultAsync(x => x.Id.Equals(ID));
+                var building = await _buildingRepository.GetFirstOrDefaultAsync(x => x.Id.Equals(Id));
                 await _buildingRepository.DeleteAsync(building);
                 return JsonResponse.Success();
             }

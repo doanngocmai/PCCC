@@ -35,11 +35,11 @@ namespace PCCC.API.Controllers.WebAdmin
         {
             return await _buildingService.CreateBuilding(model);
         }
-
-        [HttpPost("GetBuildingById")]
-        public async Task<JsonResultModel> GetBuildingById(int ID)
+        //[Authorize]
+        [HttpGet("GetBuildingById")]
+        public async Task<JsonResultModel> GetBuildingById(int Id)
         {
-            return await _buildingService.GetBuildingById(ID);
+            return await _buildingService.GetBuildingById(Id);
         }
 
 
