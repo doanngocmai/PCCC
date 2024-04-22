@@ -27,7 +27,7 @@ namespace PCCC.Repository
                     var td = Util.ConvertToDate(param.toDate);
                     var model = (from u in DbContext.UpgradeAccounts
                                  where (!string.IsNullOrEmpty(param.SearchKey) ? (u.Name.Contains(param.SearchKey)) : true
-                                 && param.IsActive.HasValue ? u.IsActive.Equals(param.IsActive) : true)
+                                 && param.IsActive.HasValue ? u.IsActive == param.IsActive : true)
                                  select new UpgradeAccModel
                                  {
                                      Id = u.Id,

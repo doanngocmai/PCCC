@@ -38,7 +38,7 @@ namespace PCCC.Service.Services
                 return JsonResponse.Success(dataPagedListModel);
             }
             catch (Exception ex)
-            {
+            { 
                 return JsonResponse.ServerError();
             }
         }
@@ -58,7 +58,7 @@ namespace PCCC.Service.Services
             }
         }
         public async Task<JsonResultModel> GetBuildingById(int Id)
-        {
+          {
             try
             {
                 var building = await _buildingRepository.GetFirstOrDefaultAsync(x => x.Id.Equals(Id));
