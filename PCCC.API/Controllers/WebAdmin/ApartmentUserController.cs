@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PCCC.Common.DTOs.ApartmentUsers;
 using PCCC.Common.DTOs.Contents;
 using PCCC.Common.Utils;
 using PCCC.Service.Interfaces;
@@ -13,34 +14,34 @@ namespace PCCC.API.Controllers.WebAdmin
     [SwaggerTag("Advertising")]
     public class ApartmentUserController : ControllerBase
     {
-        public readonly IContentService _contentService;
-        public ApartmentUserController (IContentService contentService)
+        public readonly IApartmentUserService _apartmentUserService;
+        public ApartmentUserController (IApartmentUserService apartmentUserService)
         {
-            _contentService = contentService;
+            _apartmentUserService = apartmentUserService;
         }
-        [HttpGet("GetListContent")]
+        [HttpGet("GetListApartmentUser")]
         //[Authorize]
-        public async Task<JsonResultModel> GetListContent([FromQuery] ContentSearchPageResults param)
+        public async Task<JsonResultModel> GetListApartmentUser([FromQuery] ApartmentUserSearchPageResults param)
         {
-            return await _contentService.GetListContent(param);
+            return await _apartmentUserService.GetListApartmentUser(param);
         }
         //[Authorize]
-        [HttpPost("CreateContent")]
-        public async Task<JsonResultModel> CreateContent(CreateContentModel model)
+        [HttpPost("CreateApartmentUser")]
+        public async Task<JsonResultModel> CreateApartmentUser(CreateApartmentUserModel model)
         {
-            return await _contentService.CreateContent(model);
+            return await _apartmentUserService.CreateApartmentUser(model);
         }
-        [HttpPost("UpdateContent")]
+        [HttpPost("UpdateApartmentUser")]
         //[Authorize]
-        public async Task<JsonResultModel> UpdateContent(UpdateContentModel input)
+        public async Task<JsonResultModel> UpdateApartmentUser(UpdateApartmentUserModel input)
         {
-            return await _contentService.UpdateContent(input);
+            return await _apartmentUserService.UpdateApartmentUser(input);
         }
-        [HttpDelete("DeleteContent/{ID}")]
+        [HttpDelete("DeleteApartmentUser/{ID}")]
         //[Authorize]
-        public async Task<JsonResultModel> DeleteContent(int ID)
+        public async Task<JsonResultModel> DeleteApartmentUser(int ID)
         {
-            return await _contentService.DeleteContent(ID);
+            return await _apartmentUserService.DeleteApartmentUser(ID);
         }
     }
 }
