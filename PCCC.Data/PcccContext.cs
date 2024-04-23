@@ -81,6 +81,7 @@ public partial class PcccContext : DbContext
             entity.Property(e => e.BuildingId).HasColumnName("BuildingID");
             entity.Property(e => e.FloorNumber).HasColumnType("character varying");
             entity.Property(e => e.MapId).HasColumnName("MapID");
+            entity.Property(e => e.Name).HasColumnType("character varying");
         });
 
         modelBuilder.Entity<Area>(entity =>
