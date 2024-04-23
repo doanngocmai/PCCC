@@ -19,9 +19,9 @@ namespace PCCC.API.Controllers.WebAdmin
         {
             _advertisingService = advertisingService;
         }
-        [HttpGet("GetListContent")]
+        [HttpGet("GetListAds")]
         //[Authorize]
-        public async Task<JsonResultModel> GetListContent([FromQuery] AdsSearchPageResults param)
+        public async Task<JsonResultModel> GetListAds([FromQuery] AdsSearchPageResults param)
         {
             return await _advertisingService.GetListAds(param);
         }

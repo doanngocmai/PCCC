@@ -24,7 +24,8 @@ namespace PCCC.Repository
                 return await Task.Run(() =>
                 {
                 var model = (from u in DbContext.Buildings
-                             where (!string.IsNullOrEmpty(param.SearchKey) ? u.Name.Contains(param.SearchKey) : true)
+                             where (!string.IsNullOrEmpty(param.SearchKey) ? u.Name.Contains(param.SearchKey) : true 
+                             && param.IsActive.HasValue ? u.IsActive.Equals(param.IsActive) : true)
                                  select new BuildingModel
                                  {
                                      Id = u.Id,
