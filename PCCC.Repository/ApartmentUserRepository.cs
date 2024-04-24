@@ -34,6 +34,7 @@ namespace PCCC.Repository
                                      FloorNumber = u.FloorNumber,
                                      MapId = u.MapId,
                                      CreationTime = u.CreationTime,
+                                     Name = u.Name,
                                  }).AsQueryable().ToPagedList(param.page, param.perPage);
                     return model;
                 });

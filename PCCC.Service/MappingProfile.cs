@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PCCC.Common.DTOs.Ads;
+using PCCC.Common.DTOs.ApartmentUsers;
 using PCCC.Common.DTOs.Buildings;
 using PCCC.Common.DTOs.Contents;
 using PCCC.Common.DTOs.News;
@@ -33,7 +34,9 @@ namespace PCCC.Service
             CreateMap<UpgradeAccount, CreateUpgradeAccModel>();
             CreateMap<UpgradeAccount, UpdateUpgradeAccModel>();
             CreateMap<Advertisement, CreateAdsModel>();
-            CreateMap<Advertisement, UpdateAdsModel>();
+            CreateMap<Advertisement, UpdateAdsModel>();            
+            CreateMap<ApartmentUser, CreateApartmentUserModel>();
+            CreateMap<ApartmentUser, UpdateApartmentUserModel>();
         }
 
         private void MappingViewModelToEntity()
@@ -54,7 +57,9 @@ namespace PCCC.Service
             CreateMap<CreateUpgradeAccModel, UpgradeAccount>();
             CreateMap<CreateUpgradeAccModel, UpgradeAccount>();
             CreateMap<CreateAdsModel, Advertisement>();
-            CreateMap<UpdateAdsModel, Advertisement>();
+            CreateMap<UpdateAdsModel, Advertisement>();      
+            CreateMap<CreateApartmentUserModel, ApartmentUser>();
+            CreateMap<UpdateApartmentUserModel, ApartmentUser>();
         }
     }
 }

@@ -42,7 +42,11 @@ namespace PCCC.Service.Services
                 return JsonResponse.ServerError();
             }
         }
-
+        public async Task<JsonResultModel> GetListAllBuilding()
+        {
+            var list = await _buildingRepository.GetAllAsync(x => x.IsActive == true);
+             return JsonResponse.Success(list);
+        } 
         public async Task<JsonResultModel> CreateBuilding(CreateBuildingModel model)
         {
             try

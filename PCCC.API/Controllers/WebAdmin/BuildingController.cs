@@ -55,5 +55,10 @@ namespace PCCC.API.Controllers.WebAdmin
         {
             return await _buildingService.DeleteBuilding(ID);
         }
+        [HttpGet("GetListAllBuilding")]
+        public async Task<JsonResultModel> GetListAllBuilding()
+        {
+            return await _buildingService.GetListAllBuilding();
+        }
     }
 }

@@ -18,5 +18,7 @@ namespace PCCC.Common.DTOs.ApartmentUsers
         public int? MapId { get; set; }
 
         public string FloorNumber { get; set; } = null!;
+
+        public string? Name { get; set; }
     }
 }

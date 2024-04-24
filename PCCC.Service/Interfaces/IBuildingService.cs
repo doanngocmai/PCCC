@@ -19,5 +19,6 @@ namespace PCCC.Service.Interfaces
         Task<JsonResultModel> DeleteBuilding(int ID);
         Task<JsonResultModel> GetBuildingById(int ID);
         Task<JsonResultModel> GetListBuilding(BuildingSearchPageResults param);
+        Task<JsonResultModel> GetListAllBuilding();
     }
 }
