@@ -85,7 +85,11 @@ namespace PCCCC.Service.Services
             }
         }
 
-       
-       
+       public async Task<JsonResultModel> GetListAllRole()
+        {
+            var list = await _roleRepository.GetAllAsync(x => x.IsActive == true);
+            return JsonResponse.Success(list);
+        }
+
     }
 }

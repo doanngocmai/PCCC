@@ -53,5 +53,10 @@ namespace PCCC.API.Controllers.WebAdmin
         {
             return await _roleService.DeleteRole(ID);
         }
+        [HttpGet("GetListAllRole")]
+        public async Task<JsonResultModel> GetListAllRole()
+        {
+            return await _roleService.GetListAllRole();
+        }
     }
 }
