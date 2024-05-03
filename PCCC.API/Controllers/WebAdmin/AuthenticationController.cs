@@ -45,12 +45,6 @@ namespace PCCC.API.Controllers.WebAdmin
         /// <returns></returns>
         /// <remarks>
         /// Sample request:
-        ///
-        ///     {
-        ///       "phone"    : "0987654321",
-        ///       "password" : "12345678"
-        ///     }
-        ///
         /// </remarks>
         [HttpPost("Login")]
         public async Task<JsonResultModel> Login(LoginModel model)

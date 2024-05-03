@@ -98,7 +98,14 @@ namespace PCCC.Service.Services
                 userNew.Level = PCCCConsts.UserWebAmin;
                 userNew.IsDelete = false;
                 userNew.CreatorUserName = PCCCConsts.ADMIN;
-                await _userRepository.AddAsync(userNew);
+                var user = await _userRepository.AddAsync(userNew);
+                //UserRole useRole = new UserRole();
+                //foreach (roleID in model.listRole)
+                //{
+                //    useRole.RoleId = roleID;
+                //    useRole.UserId - user.Id;
+
+                //}
                 return JsonResponse.Success();
             }
             catch (Exception ex)
