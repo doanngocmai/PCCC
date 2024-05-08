@@ -55,7 +55,7 @@ namespace PCCC.Service
             CreateMap<CreateBuildingModel, Building>();
             CreateMap<UpdateBuildingModel, Building >(); 
             CreateMap<CreateUpgradeAccModel, UpgradeAccount>();
-            CreateMap<CreateUpgradeAccModel, UpgradeAccount>();
+            CreateMap<UpdateUpgradeAccModel, UpgradeAccount>();
             CreateMap<CreateAdsModel, Advertisement>();
             CreateMap<UpdateAdsModel, Advertisement>();      
             CreateMap<CreateApartmentUserModel, ApartmentUser>();
