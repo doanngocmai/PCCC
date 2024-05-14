@@ -28,7 +28,7 @@ namespace PCCC.API.Controllers.WebAdmin
             _Configuration = configuration;
             try
             {
-                secretKey = _Configuration["AppSettings:Secret"];
+                secretKey = _Configuration["Authentication:Secret"];
                 timeout = int.Parse(_Configuration["Time:timeout"]);
             }
             catch

@@ -24,6 +24,6 @@ namespace PCCC.Common.DTOs.Users
         public string Phone { get; set; } = null!;
 
         public string Email { get; set; } = null!;
-        public List<int> listRole { get; set; }
+        //public List<int> listRole { get; set; }
     }
 }

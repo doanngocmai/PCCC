@@ -8,7 +8,6 @@ namespace PCCC.Common.DTOs.Authentications
     {
         [Required]
         public string Phone { get; set; }
-        public string DeviceID { get; set; }
         public string Password { get; set; }
     }
     public class LoginAppModel
