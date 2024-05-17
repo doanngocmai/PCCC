@@ -43,7 +43,7 @@ namespace PCCC.Service.Services
                 return JsonResponse.ServerError();
             }
         }
-        public async Task<JsonResultModel> CreateNew(CreateNewModel model, string? imageUrl)
+        public async Task<JsonResultModel> CreateNew(CreateNewModel model)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace PCCC.Service.Services
                 if (data != null)
                     return JsonResponse.Error(PCCCConsts.ERROR_CONTENT_ALREADY_EXIST, PCCCConsts.MESSAGE_CONTENT_ALREADY_EXIST);
                 var news = _mapper.Map<News>(model);
-                news.Image = imageUrl;
+                //news.Image = imageUrl;
                 news.CreationTime = DateTime.Now;
                 await _newRepository.AddAsync(news);
                 return JsonResponse.Success();

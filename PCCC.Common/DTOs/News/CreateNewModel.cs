@@ -12,7 +12,8 @@ namespace PCCC.Common.DTOs.News
     {
         public string Title { get; set; } = null!;
         public int Type { get; set; }
-        public IFormFile ImageFile { get; set; }
+        //public IFormFile ImageFile { get; set; }
+        public string? Image { get; set; }
         public string Content { get; set; } = null!;
         public bool IsActive { get; set; }
     }
